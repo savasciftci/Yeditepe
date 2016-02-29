@@ -11,15 +11,16 @@
                 <div class="col-xs-12">
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">Kategoriler</h3>
-                        </div><!-- /.box-header -->  <div align="right"> <button type="button" class="btn btn-primary" id="katEkle" title="Yeni Kategori Ekle" style="margin-right:25px; padding: 10px">Kategori EKLE</button></div> 
+                            <h3 class="box-title">Duyurular</h3>
+                        </div><!-- /.box-header -->   
                         <div class="box-body">
                             <table id="example1" class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
-                                        <th>Kategori Adı</th>
-                                        <th>Türü</th>
-                                        <th>İşlemler</th>
+                                        <th>Duyuru Başlığı</th>
+                                        <th>Duyuru Aciklama</th>
+                                        <th>Anasayfada Gözükme Durumu</th>
+                                        <th>Düzenle</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -27,22 +28,23 @@
                                     $miktar = count($model);
                                     for ($k = 0; $k < $miktar; $k++) {
                                         ?>
-                                        <tr id="kattable_<?php echo $model[$k]["KategoriID"]; ?>">
-
-                                            <td><?php echo $model[$k]["KategoriAdiTR"]; ?></td>
-                                            <td><?php echo $model[$k]["tur"] == 1 ? '<i class="fa fa-check-square-o fa fa-success "></i>  Klima' : '<i class="fa fa-check-square"></i>  Kombi'; ?></td>
+                                        <tr id="kattable_<?php echo $model[$k]["DuyuruID"]; ?>">
+                                            <td><?php echo $model[$k]["BaslikTR"]; ?></td>
+                                            <td><?php echo $model[$k]["AciklamaTR"]; ?></td>
+                                            <td><?php echo $model[$k]["onay"] == 1 ? '<i class="fa fa-check-square-o fa fa-success "></i>  Gozuksünn' : '<i class="fa fa-times"></i>  Gozukmesin'; ?></td>
                                             <td>
-                                                <a id="duzenle" value="<?php echo $model[$k]["KategoriID"]; ?>" class="btn btn-sm btn-success" style="cursor:pointer" title="Düzenle"><i  class="fa fa-edit"></i></a>
-                                                <a id="ksil" value="<?php echo $model[$k]["KategoriID"]; ?>" class="btn btn-sm btn-danger" style="cursor:pointer" title="Sil"><i  class="fa fa-trash"></i></a>
+                                                <a id="duyduzenle" value="<?php echo $model[$k]["DuyuruID"]; ?>" class="btn btn-sm btn-success" style="cursor:pointer" title="Düzenle"><i  class="fa fa-edit"></i></a>
+                                                <a id="duysil" value="<?php echo $model[$k]["DuyuruID"]; ?>" class="btn btn-sm btn-danger" style="cursor:pointer" title="Sil"><i  class="fa fa-trash"></i></a>
                                             </td>
                                         </tr>
                                     <?php } ?>
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <th class="col col-md-5">Kategori adı</th>
-                                        <th class="col col-md-5">Türü</th>
-                                        <th class="col col-md-2">İşlemler</th>
+                                        <th>Duyuru Başlığı</th>
+                                        <th>Duyuru Aciklama</th>
+                                        <th>Anasayfada Gözükme Durumu</th>
+                                        <th>Düzenle</th>
                                     </tr>
                                 </tfoot>
                             </table>
@@ -51,65 +53,24 @@
                 </div><!-- /.col -->
             </div><!-- /.row -->
         </section><!-- /.content -->
-        <div id="katEkleModal" class="modal fade">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title">Kategori Ekle</h4>
-                    </div>
-                    <div class="modal-body">
-                        <div class="box-body form-horizontal">
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">Kategori Adı</label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="ekategoriadi" name="ekategoriadi" value="" required>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">Kategori Turu</label>
-                                <div class="col-sm-9">
-                                    <select class="form-control" id="gozuksun" name="urunkategori" placeholder="Kategori Seçiniz" required>
-                                        <option value="1">Klima</option>
-
-                                        <option  value="2">Kombi</option>
-
-                                    </select>
-                                </div>    
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Vazgeç</button>
-                            <button type="button" class="btn btn-primary" id="katEklemeIslemi">Ekle</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+       
     <div id="myModal" class="modal fade">
         <div class="modal-dialog">
             <input type="hidden" id="sakliID" value="">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title">Kategori Düzenle</h4>
+                        <h4 class="modal-title">Duyuru Durumunu Güncelle</h4>
                     </div>
                     <div class="modal-body">
                         <div class="box-body form-horizontal">
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">Kategori Adı</label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="dkategoriadi" name="dkategoriadi" value="" required>
-                                </div>
-                            </div>
-                            <div class="form-group">
                                 <label class="col-sm-3 control-label">Kategori Türü</label>
                                 <div class="col-sm-9">
-                                    <select class="form-control" id="dgozuksun" name="urunkategori" placeholder="Kategori Seçiniz" required>
-                                        <option value="1">Klima</option>
+                                    <select class="form-control" id="duygozuksun" name="urunkategori" placeholder="Kategori Seçiniz" required>
+                                        <option value="1">Gözüksün</option>
 
-                                        <option  value="2">Kombi</option>
+                                        <option  value="0">Gözükmesin</option>
 
                                     </select>
                                 </div>    
@@ -117,7 +78,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Vazgeç</button>
-                            <button type="button" class="btn btn-primary" id="katduzenle">Düzenle</button>
+                            <button type="button" class="btn btn-primary" id="duyurduzenle">Düzenle</button>
                         </div>
                     </div>
                 </div>

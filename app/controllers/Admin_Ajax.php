@@ -200,6 +200,38 @@ class Admin_Ajax extends Controller {
                         $sonuc["hata"] = "Lütfen iceriği boş girmeyiniz.";
                     }
                     break;
+                case "mahalleduzenle":
+                    $form->post("ad", true);
+                    $form->post("anasayfadurum", true);
+                    $form->post("id", true);
+                    $ad = $form->values['ad'];
+                    $anasayfadurum = $form->values['anasayfadurum'];
+                    $id = $form->values['id'];
+                    if ($ad != "") {
+                        if ($anasayfadurum != "") {
+                            // error_log($anasayfadurum);
+                            if ($form->submit()) {
+                                $datamahal = array(
+                                    'MahalleAdi' => $ad,
+                                    'SemtID' => $anasayfadurum
+                                );
+                                }
+                                $result = $Panel_Model->mahalleupdate($datamahal, $id);
+                                error_log("reslu:" . $result);
+                                if ($result) {
+                                    $sonuc["result"] = "Başarılı bir şekilde güncellenme olmuştur.";
+                                } else {
+                                    error_log("reslu:" . $result);
+                                    $sonuc["hata"] = "Bir hata oluştu.Tekrar deneyiniz";
+                                }
+                            } else {
+                                $sonuc["hata"] = "Mahallenin semtini belirleyiniz.";
+                            }
+                        } else {
+                            $sonuc["hata"] = "Lütfen mahallenin adını boş girmeyiniz .";
+                        }
+                   
+                    break;
                 case "katduzenle":
                     $form->post("ad", true);
                     $form->post("anasayfadurum", true);
@@ -209,11 +241,11 @@ class Admin_Ajax extends Controller {
                     $id = $form->values['id'];
                     if ($ad != "") {
                         if ($anasayfadurum != "") {
-                            error_log($anasayfadurum);
+                            // error_log($anasayfadurum);
                             if ($form->submit()) {
                                 $dataKategori = array(
-                                    'ad' => $ad,
-                                    'anasayfa_durum' => $anasayfadurum
+                                    'KategoriAdiTR' => $ad,
+                                    'tur' => $anasayfadurum
                                 );
                             }
                             $result = $Panel_Model->kategoriupdate($dataKategori, $id);
@@ -230,6 +262,52 @@ class Admin_Ajax extends Controller {
                         $sonuc["hata"] = "Lütfen adınızı boş girmeyiniz.";
                     }
                     break;
+                case "duyduzenle":
+                    $form->post("anasayfadurum", true);
+                    $form->post("id", true);
+                    $anasayfadurum = $form->values['anasayfadurum'];
+                    $id = $form->values['id'];
+                        if ($anasayfadurum != "") {
+                            // error_log($anasayfadurum);
+                            if ($form->submit()) {
+                                $dataDuyuru = array(
+                                    'onay' => $anasayfadurum
+                                );
+                            }
+                            $result = $Panel_Model->duyuruupdate($dataDuyuru, $id);
+                            error_log("reslu:" . $result);
+                            if ($result) {
+                                $sonuc["result"] = "Başarılı bir şekilde güncellenme olmuştur.";
+                            } else {
+                                $sonuc["hata"] = "Bir hata oluştu.Tekrar deneyiniz";
+                            }
+                        } else {
+                            $sonuc["hata"] = "Anasayfada gözüksünmü belirleyiniz";
+                        }
+                    break;
+                case "semtduzenle":
+                    $form->post("ad", true);
+                    $form->post("id", true);
+                    $ad = $form->values['ad'];
+                    $id = $form->values['id'];
+                    if ($ad != "") {
+                        // error_log($anasayfadurum);
+                        if ($form->submit()) {
+                            $dataSemt = array(
+                                'SemtAdi' => $ad
+                            );
+                        }
+                        $result = $Panel_Model->semtupdate($dataSemt, $id);
+                        // error_log("reslu:" . $result);
+                        if ($result) {
+                            $sonuc["result"] = "Başarılı bir şekilde güncellenme olmuştur.";
+                        } else {
+                            $sonuc["hata"] = "Bir hata oluştu.Tekrar deneyiniz";
+                        }
+                    } else {
+                        $sonuc["hata"] = "Lütfen semt adını boş girmeyiniz.";
+                    }
+                    break;
                 case "katEkle":
                     $form->post("ad", true);
                     $form->post("anasayfadurum", true);
@@ -239,8 +317,8 @@ class Admin_Ajax extends Controller {
                         if ($anasayfadurum != "") {
                             if ($form->submit()) {
                                 $dataKategori = array(
-                                    'ad' => $ad,
-                                    'anasayfa_durum' => $anasayfadurum
+                                    'KategoriAdiTR' => $ad,
+                                    'tur' => $anasayfadurum
                                 );
                             }
                             $result = $Panel_Model->kategoriinsert($dataKategori, $id);
@@ -256,10 +334,75 @@ class Admin_Ajax extends Controller {
                         $sonuc["hata"] = "Lütfen adınızı boş girmeyiniz.";
                     }
                     break;
+                case "semtEkle":
+                    $form->post("ad", true);
+                    $ad = $form->values['ad'];
+                    if ($ad != "") {
+                        if ($form->submit()) {
+                            $dataSemt = array(
+                                'SemtAdi' => $ad
+                            );
+                        }
+                        $result = $Panel_Model->semtinsert($dataSemt, $id);
+                        if ($result) {
+                            $sonuc["result"] = "Başarılı bir şekilde semt eklenmiştir.";
+                        } else {
+                            $sonuc["hata"] = "Bir hata oluştu.Tekrar deneyiniz";
+                        }
+                    } else {
+                        $sonuc["hata"] = "Lütfen adınızı boş girmeyiniz.";
+                    }
+                    break;
+                case "mahalekle":
+                    $form->post("mahalad", true);
+                    $form->post("semtad", true);
+                    $mahalle = $form->values['mahalad'];
+                    $msemt = $form->values['semtad'];
+                    if ($mahalle != "") {
+                        if ($msemt != "") {
+                            if ($form->submit()) {
+                                $dataMahal = array(
+                                    'MahalleAdi' => $mahalle,
+                                    'SemtID' => $msemt
+                                );
+                            }
+                            $result = $Panel_Model->mahalinsert($dataMahal, $id);
+                            if ($result) {
+                                $sonuc["result"] = "Başarılı bir şekilde kategori eklenmiştir.";
+                            } else {
+                                $sonuc["hata"] = "Bir hata oluştu.Tekrar deneyiniz";
+                            }
+                        } else {
+                            $sonuc["hata"] = "Lütfen bağlı olduğu bir semt seçin.";
+                        }
+                    } else {
+                        $sonuc["hata"] = "Lütfen mahalle adını boş girmeyiniz.";
+                    }
+                    break;
+                case "duyuruSil":
+                    $form->post("id", true);
+                    $id = $form->values['id'];
+                    $resultdelete = $Panel_Model->duyurudelete($id);
+                    if ($resultdelete) {
+                        $sonuc["result"] = "İşlem Başarılı.";
+                    } else {
+                        $sonuc["hata"] = "Bir hata oluştu.Tekrar deneyiniz";
+                    }
+                    break;
                 case "kategoriSil":
                     $form->post("id", true);
                     $id = $form->values['id'];
                     $resultdelete = $Panel_Model->kategoridelete($id);
+                    if ($resultdelete) {
+                        $sonuc["result"] = "İşlem Başarılı.";
+                    } else {
+                        $sonuc["hata"] = "Bir hata oluştu.Tekrar deneyiniz";
+                    }
+                    break;
+                case "semtsil":
+                    $form->post("id", true);
+                    $id = $form->values['id'];
+                    $resultdelete = $Panel_Model->semtdelete($id);
                     if ($resultdelete) {
                         $sonuc["result"] = "İşlem Başarılı.";
                     } else {
@@ -275,7 +418,17 @@ class Admin_Ajax extends Controller {
                     } else {
                         $sonuc["hata"] = "Bir hata oluştu.Tekrar deneyiniz";
                     }
-                    break;
+                break;
+                case "mahSil":
+                $form->post("id", true);
+                $id = $form->values['id'];
+                $resultdelete = $Panel_Model->mahdelete($id);
+                if ($resultdelete) {
+                    $sonuc["result"] = "İşlem Başarılı.";
+                } else {
+                    $sonuc["hata"] = "Bir hata oluştu.Tekrar deneyiniz";
+                }
+                break;
                 case "urunDuzenle":
                     require "app/otherClasses/class.upload.php";
                     $form->post("aciklama", true);
@@ -359,49 +512,48 @@ class Admin_Ajax extends Controller {
                     $urunfiyat = $form->values['urunfiyat'];
                     if ($urunaciklama != "") {
                         if ($urunkategori != "") {
-                                $realName = $_FILES['file']['name'];
-                                if ($realName != "") {
-                                    $image = new Upload($_FILES['file']);
-                                    if ($image->uploaded) {
-                                        // sadece resim formatları yüklensin
-                                        $image->allowed = array('image/*');
-                                        $image->image_min_height = 250;
-                                        $image->image_min_width = 250;
-                                        $image->image_max_height = 2000;
-                                        $image->image_max_width = 2000;
-                                        $image->file_new_name_body = time();
-                                        $image->file_name_body_pre = 'mobilya_';
-                                        $image->image_resize = true;
-                                        $image->image_ratio_crop = true;
-                                        $image->image_x = 900;
-                                        $image->image_y = 900;
-                                        $image->Process("upload/urunler");
+                            $realName = $_FILES['file']['name'];
+                            if ($realName != "") {
+                                $image = new Upload($_FILES['file']);
+                                if ($image->uploaded) {
+                                    // sadece resim formatları yüklensin
+                                    $image->allowed = array('image/*');
+                                    $image->image_min_height = 250;
+                                    $image->image_min_width = 250;
+                                    $image->image_max_height = 2000;
+                                    $image->image_max_width = 2000;
+                                    $image->file_new_name_body = time();
+                                    $image->file_name_body_pre = 'mobilya_';
+                                    $image->image_resize = true;
+                                    $image->image_ratio_crop = true;
+                                    $image->image_x = 900;
+                                    $image->image_y = 900;
+                                    $image->Process("upload/urunler");
 
-                                        if ($image->processed) {
-                                            if ($form->submit()) {
-                                                $dataurun = array(
-                                                    'urun_aciklama' => $urunaciklama,
-                                                    'urun_kategori' => $urunkategori,
-                                                    'urun_fiyat' => $urunfiyat,
-                                                    'urun_resim' => $image->file_dst_name
-                                                );
-                                            }
-                                            $result = $Panel_Model->uruninsert($dataurun);
-                                            if ($result) {
-                                                $sonuc["result"] = "Başarılı bir şekilde güncellenme olmuştur.";
-                                            } else {
-                                                $sonuc["hata"] = "Bir hata oluştu.Tekrar deneyiniz";
-                                            }
+                                    if ($image->processed) {
+                                        if ($form->submit()) {
+                                            $dataurun = array(
+                                                'urun_aciklama' => $urunaciklama,
+                                                'urun_kategori' => $urunkategori,
+                                                'urun_fiyat' => $urunfiyat,
+                                                'urun_resim' => $image->file_dst_name
+                                            );
+                                        }
+                                        $result = $Panel_Model->uruninsert($dataurun);
+                                        if ($result) {
+                                            $sonuc["result"] = "Başarılı bir şekilde güncellenme olmuştur.";
                                         } else {
-                                            $sonuc["hata"] = $image->error;
+                                            $sonuc["hata"] = "Bir hata oluştu.Tekrar deneyiniz";
                                         }
                                     } else {
                                         $sonuc["hata"] = $image->error;
                                     }
                                 } else {
-                                    $sonuc["hata"] = "Lütfen Resim Seçiniz";
+                                    $sonuc["hata"] = $image->error;
                                 }
-                           
+                            } else {
+                                $sonuc["hata"] = "Lütfen Resim Seçiniz";
+                            }
                         } else {
                             $sonuc["hata"] = "Lütfen kategori seciniz";
                         }

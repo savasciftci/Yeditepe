@@ -26,6 +26,21 @@
                     <i class="fa fa-dashboard"></i> <span>KATEGORİLER</span> <i class=" pull-right"></i>
                 </a>
             </li>
+            <li>
+                <a href="<?php echo SITE_URLA; ?>/Semtler">
+                    <i class="fa fa-dashboard"></i> <span>SEMTLER</span> <i class=" pull-right"></i>
+                </a>
+            </li>
+             <li>
+                <a href="<?php echo SITE_URLA; ?>/Mahalle">
+                    <i class="fa fa-dashboard"></i> <span>MAHALLELER</span> <i class=" pull-right"></i>
+                </a>
+            </li>
+             <li>
+                <a href="<?php echo SITE_URLA; ?>/Duyuru">
+                    <i class="fa fa-dashboard"></i> <span>DUYURULAR</span> <i class=" pull-right"></i>
+                </a>
+            </li>
             <li><a href="<?php echo SITE_URLA; ?>/GenelAyarlar"><i class="fa fa-cog"></i> <span>GENEL AYARLAR</span></a></li>
         </ul>
     </section>

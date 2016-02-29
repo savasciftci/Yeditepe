@@ -16,8 +16,14 @@ class Admin extends Controller {
             $durum = array();
             $urunler = $model->urunselect();
             $kategoriler = $model->kategoriselect();
+            $semtler = $model->semtselect();
+            $mahalleler = $model->mahalleselect();
+            $duyurular = $model->duyuruselect();
             $durum[0] = count($urunler);
             $durum[1] = count($kategoriler);
+            $durum[2] = count($semtler);
+            $durum[3] = count($mahalleler);
+            $durum[4] = count($duyurular);
             $this->load->view("Template_BackEnd/header");
             $this->load->view("Template_BackEnd/left");
             $this->load->view("Template_BackEnd/home", $durum);
@@ -74,15 +80,66 @@ class Admin extends Controller {
             $kategoriliste = $model->kategoriselect();
             $sayac = 0;
             foreach ($kategoriliste as $kategorilistee) {
-                $kategori[$a]['ID'] = $kategorilistee['ID'];
-                $kategori[$a]['ad'] = $kategorilistee['ad'];
-                $kategori[$a]['anasayfa_durum'] = $kategorilistee['anasayfa_durum'];
+                $kategori[$a]['KategoriID'] = $kategorilistee['KategoriID'];
+                $kategori[$a]['KategoriAdiTR'] = $kategorilistee['KategoriAdiTR'];
+                $kategori[$a]['tur'] = $kategorilistee['tur'];
                 $sayac++;
             }
 
             $this->load->view("Template_BackEnd/header");
             $this->load->view("Template_BackEnd/left");
             $this->load->view("Template_BackEnd/kategoriler", $kategoriliste);
+            $this->load->view("Template_BackEnd/footer");
+        } else {
+            $this->load->view("Entry/loginForm");
+        }
+    }
+    
+    public function duyuru() {
+        if (session::get("login") == true) {
+            $model = $this->load->model("Panel_Model");
+            $duyuru = array();
+            //kategorileri listeleme
+            $duyuruliste = $model->duyuruselect();
+            $sayac = 0;
+            foreach ($kategoriliste as $duyurulistee) {
+                $duyuru[$a]['DuyuruID'] = $duyurulistee['DuyuruID'];
+                $duyuru[$a]['BaslikTR'] = $duyurulistee['BaslikTR'];
+                $duyuru[$a]['AciklamaTR'] = $duyurulistee['AciklamaTR'];
+                $duyuru[$a]['Tarih'] = $duyurulistee['Tarih'];
+                $duyuru[$a]['OzetTR'] = $duyurulistee['OzetTR'];
+                $sayac++;
+            }
+
+            $this->load->view("Template_BackEnd/header");
+            $this->load->view("Template_BackEnd/left");
+            $this->load->view("Template_BackEnd/duyuru", $duyuruliste);
+            $this->load->view("Template_BackEnd/footer");
+        } else {
+            $this->load->view("Entry/loginForm");
+        }
+    }
+
+    public function semtler() {
+        if (session::get("login") == true) {
+            $model = $this->load->model("Panel_Model");
+            $semt = array();
+            //kategorileri listeleme
+            $semtliste = $model->semtselect();
+            $sayac = 0;
+            $a = 0;
+            foreach ($semtliste as $semtlistee) {
+                $semt[$a]['id'] = $semtlistee['id'];
+                $semt[$a]['SemtAdi'] = $semtlistee['SemtAdi'];
+
+                // $kategori[$a]['tur'] = $kategorilistee['tur'];
+                $sayac++;
+                $a++;
+            }
+           /// error_log(count($semt));
+            $this->load->view("Template_BackEnd/header");
+            $this->load->view("Template_BackEnd/left");
+            $this->load->view("Template_BackEnd/semtler", $semt);
             $this->load->view("Template_BackEnd/footer");
         } else {
             $this->load->view("Entry/loginForm");
@@ -125,6 +182,47 @@ class Admin extends Controller {
             $this->load->view("Template_BackEnd/header");
             $this->load->view("Template_BackEnd/left");
             $this->load->view("Template_BackEnd/urunler", $urunarray);
+            $this->load->view("Template_BackEnd/footer");
+        } else {
+            $this->load->view("Entry/loginForm");
+        }
+    }
+    
+     public function mahalle() {
+        if (session::get("login") == true) {
+            $model = $this->load->model("Panel_Model");
+            $mahallearray = array();
+            $semt = array();
+            $mahal = array();
+
+            $mahalleliste = $model->mahalleselect();
+            $b = 0;
+            foreach ($mahalleliste as $mahallelistee) {
+                $mahal[$b]['id'] = $mahallelistee['id'];
+                $mahal[$b]['MahalleAdi'] = $mahallelistee['MahalleAdi'];
+                $mahal[$b]['SemtID'] = $mahallelistee['SemtID'];
+                $b++;
+            }
+
+            //kategorileri listeleme
+           $semtliste = $model->semtselect();
+            $a = 0;
+            foreach ($semtliste as $semtlistee) {
+                $semt[$a]['id'] = $semtlistee['id'];
+                $semt[$a]['SemtAdi'] = $semtlistee['SemtAdi'];
+
+                // $kategori[$a]['tur'] = $kategorilistee['tur'];
+                $sayac++;
+                $a++;
+            }
+
+            $mahallearray[0] = $mahal;
+            $mahallearray[1] = $semt;
+
+
+            $this->load->view("Template_BackEnd/header");
+            $this->load->view("Template_BackEnd/left");
+            $this->load->view("Template_BackEnd/mahalle", $mahallearray);
             $this->load->view("Template_BackEnd/footer");
         } else {
             $this->load->view("Entry/loginForm");
