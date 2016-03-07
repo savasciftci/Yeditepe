@@ -1,4 +1,4 @@
-<script src="<?php echo SITE_BACK_ASSETS_JS; ?>/islem.js" type="text/javascript"></script>
+<script src="<?php echo SITE_BACK_ASSETS_JS; ?>/islemmahalle.js" type="text/javascript"></script>
 <script src="<?php echo SITE_BACK_ASSETS_BOOTSTRAPJS; ?>/bootstrap.min.js"></script>
 <link rel="stylesheet" href="<?php echo SITE_BACK_ASSETS_PLUGINS_DATATABLES; ?>/dataTables.bootstrap.css"></link>
 <div class="content-wrapper">
@@ -10,7 +10,7 @@
                         <h3 class="box-title">Mahalleler</h3>
                     </div><!-- /.box-header --> 
                     <div align="right"> 
-                        <button type="button" class="btn btn-primary" id="mahallEkle" title="Yeni Ürün Ekle" style="margin-right:25px; padding: 10px">Mahalle EKLE</button>
+                        <button type="button" class="btn btn-primary" id="mahallEkle" title="Yeni Mahalle Ekle" style="margin-right:25px; padding: 10px">Mahalle EKLE</button>
                     </div> 
                     <div class="box-body">
                         <table id="example1" class="table table-bordered table-hover table-condensed">
@@ -48,7 +48,7 @@
             </div><!-- /.col -->
         </div><!-- /.row -->
     </section><!-- /.content -->
-    <div id="urunEkleModal" class="modal fade">
+    <div id="mahalEkleModal" class="modal fade">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -109,16 +109,16 @@
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label">Mahallenin Semti</label>
                                     <div class="col-sm-9">
-                                        <select class="form-control" id="mahalkategori" name="urunkategori" required>
-                                            <option value="-1" selected>Kategori Seçiniz</option>
-                                            <?php
-                                            $miktar = count($model[1]);
-                                            for ($k = 0; $k < $miktar; $k++) {
-                                                ?>
-                                                <option  value="<?php echo $model[1][$k]["id"]; ?>"><?php echo $model[1][$k]["SemtAdi"]; ?></option>
-                                            <?php } ?>
-                                        </select>
-                                    </div>     
+                                    <select class="form-control" id="mahalkategori" name="semtadii" required>
+                                        <option value="-1" selected>Semt Seçiniz</option>
+                                        <?php
+                                        $miktar = count($model[1]);
+                                        for ($k = 0; $k < $miktar; $k++) {
+                                            ?>
+                                            <option  value="<?php echo $model[1][$k]["id"]; ?>"><?php echo $model[1][$k]["SemtAdi"]; ?></option>
+                                        <?php } ?>
+                                    </select>
+                                </div>      
                                 </div>
                             </div>
                         </form>
@@ -152,7 +152,17 @@
 <!-- Bootstrap 3.3.5 -->
 <script>
     $(function () {
-        $("#example1").DataTable();
+        grupTable = $("#example1").DataTable({
+            "paging": true,
+            "lengthChange": true,
+            "searching": true,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+            "columnDefs": [
+                {"width": "10%", "targets": 2}
+            ]
+        });
         $('#example2').DataTable({
             "paging": true,
             "lengthChange": false,
