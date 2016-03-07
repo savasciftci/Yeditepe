@@ -17,11 +17,6 @@
         <!-- search form -->
         <ul class="sidebar-menu">
             <li>
-                <a href="<?php echo SITE_URLA; ?>/Urunler">
-                    <i class="fa fa-dashboard"></i> <span>ÜRÜNLER</span> <i class=" pull-right"></i>
-                </a>
-            </li>
-            <li>
                 <a href="<?php echo SITE_URLA; ?>/Kategoriler">
                     <i class="fa fa-dashboard"></i> <span>KATEGORİLER</span> <i class=" pull-right"></i>
                 </a>
@@ -41,6 +36,27 @@
                     <i class="fa fa-dashboard"></i> <span>DUYURULAR</span> <i class=" pull-right"></i>
                 </a>
             </li>
+             <li>
+                <a href="<?php echo SITE_URLA; ?>/Markalar">
+                    <i class="fa fa-dashboard"></i> <span>MARKALAR</span> <i class=" pull-right"></i>
+                </a>
+            </li>
+             <li>
+                <a href="<?php echo SITE_URLA; ?>/Vitrin">
+                    <i class="fa fa-dashboard"></i> <span>VİTRİNLER</span> <i class=" pull-right"></i>
+                </a>
+            </li>
+             <li>
+                <a href="<?php echo SITE_URLA; ?>/Yazilar">
+                    <i class="fa fa-dashboard"></i> <span>YAZILAR</span> <i class=" pull-right"></i>
+                </a>
+            </li>
+             <li>
+                <a href="<?php echo SITE_URLA; ?>/About">
+                    <i class="fa fa-dashboard"></i> <span>HAKKIMIZDA</span> <i class=" pull-right"></i>
+                </a>
+            </li>
+            
             <li><a href="<?php echo SITE_URLA; ?>/GenelAyarlar"><i class="fa fa-cog"></i> <span>GENEL AYARLAR</span></a></li>
         </ul>
     </section>

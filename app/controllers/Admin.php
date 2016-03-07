@@ -19,11 +19,19 @@ class Admin extends Controller {
             $semtler = $model->semtselect();
             $mahalleler = $model->mahalleselect();
             $duyurular = $model->duyuruselect();
+            $markalar = $model->markaselect();
+            $vitrin = $model->vitrinselect();
+            $yazilar = $model->yaziselect();
+            $about = $model->aboutselect();
             $durum[0] = count($urunler);
             $durum[1] = count($kategoriler);
             $durum[2] = count($semtler);
             $durum[3] = count($mahalleler);
             $durum[4] = count($duyurular);
+            $durum[5] = count($markalar);
+            $durum[6] = count($vitrin);
+            $durum[7] = count($yazilar);
+            $durum[8] = count($about);
             $this->load->view("Template_BackEnd/header");
             $this->load->view("Template_BackEnd/left");
             $this->load->view("Template_BackEnd/home", $durum);
@@ -108,12 +116,111 @@ class Admin extends Controller {
                 $duyuru[$a]['AciklamaTR'] = $duyurulistee['AciklamaTR'];
                 $duyuru[$a]['Tarih'] = $duyurulistee['Tarih'];
                 $duyuru[$a]['OzetTR'] = $duyurulistee['OzetTR'];
+                $duyuru[$a]['onay'] = $duyurulistee['onay'];
                 $sayac++;
             }
 
             $this->load->view("Template_BackEnd/header");
             $this->load->view("Template_BackEnd/left");
             $this->load->view("Template_BackEnd/duyuru", $duyuruliste);
+            $this->load->view("Template_BackEnd/footer");
+        } else {
+            $this->load->view("Entry/loginForm");
+        }
+    }
+    
+    public function markalar() {
+        if (session::get("login") == true) {
+            $model = $this->load->model("Panel_Model");
+            $marka = array();
+            //kategorileri listeleme
+            $markaliste = $model->markaselect();
+            $sayac = 0;
+            foreach ($markaliste as $markalistee) {
+                $marka[$a]['id'] = $markalistee['id'];
+                $marka[$a]['MarkaAdi'] = $markalistee['MarkaAdi'];
+                $marka[$a]['ResimYolu'] = $markalistee['ResimYolu'];
+                $marka[$a]['url'] = $markalistee['url'];
+                $marka[$a]['Tur'] = $markalistee['Tur'];
+                $sayac++;
+            }
+
+            $this->load->view("Template_BackEnd/header");
+            $this->load->view("Template_BackEnd/left");
+            $this->load->view("Template_BackEnd/markalar", $markaliste);
+            $this->load->view("Template_BackEnd/footer");
+        } else {
+            $this->load->view("Entry/loginForm");
+        }
+    }
+    
+    public function about() {
+        if (session::get("login") == true) {
+            $model = $this->load->model("Panel_Model");
+            $marka = array();
+            //kategorileri listeleme
+            $aboutliste = $model->aboutselect();
+            $sayac = 0;
+            foreach ($aboutliste as $aboutlistee) {
+                $marka[$a]['id'] = $aboutlistee['id'];
+                $marka[$a]['MarkaAdi'] = $aboutlistee['MarkaAdi'];
+                $marka[$a]['ResimYolu'] = $aboutlistee['ResimYolu'];
+                $marka[$a]['url'] = $aboutlistee['url'];
+                $marka[$a]['Tur'] = $aboutlistee['Tur'];
+                $sayac++;
+            }
+
+            $this->load->view("Template_BackEnd/header");
+            $this->load->view("Template_BackEnd/left");
+            $this->load->view("Template_BackEnd/about", $aboutliste);
+            $this->load->view("Template_BackEnd/footer");
+        } else {
+            $this->load->view("Entry/loginForm");
+        }
+    }
+    
+    public function yazilar() {
+        if (session::get("login") == true) {
+            $model = $this->load->model("Panel_Model");
+            $yazi = array();
+            //kategorileri listeleme
+            $yaziliste = $model->yaziselect();
+            $sayac = 0;
+            foreach ($yaziliste as $yazilistee) {
+                $yazi[$a]['id'] = $yazilistee['id'];
+                $yazi[$a]['Baslik'] = $yazilistee['Baslik'];
+                $yazi[$a]['Yazi'] = $yazilistee['Yazi'];
+                $sayac++;
+            }
+
+            $this->load->view("Template_BackEnd/header");
+            $this->load->view("Template_BackEnd/left");
+            $this->load->view("Template_BackEnd/yazilar", $yaziliste);
+            $this->load->view("Template_BackEnd/footer");
+        } else {
+            $this->load->view("Entry/loginForm");
+        }
+    }
+    
+    public function vitrin() {
+        if (session::get("login") == true) {
+            $model = $this->load->model("Panel_Model");
+            $vitrin = array();
+            //kategorileri listeleme
+            $vitrinliste = $model->vitrinselect();
+            $sayac = 0;
+            foreach ($vitrinliste as $vitrinlistee) {
+                $vitrin[$a]['VitrinID'] = $vitrinlistee['VitrinID'];
+                $vitrin[$a]['VitrinResim'] = $vitrinlistee['VitrinResim'];
+                $vitrin[$a]['Aktiflik'] = $vitrinlistee['Aktiflik'];
+                $vitrin[$a]['url'] = $vitrinlistee['url'];
+                $vitrin[$a]['Sira'] = $vitrinlistee['Sira'];
+                $sayac++;
+            }
+
+            $this->load->view("Template_BackEnd/header");
+            $this->load->view("Template_BackEnd/left");
+            $this->load->view("Template_BackEnd/vitrin", $vitrinliste);
             $this->load->view("Template_BackEnd/footer");
         } else {
             $this->load->view("Entry/loginForm");

@@ -1,4 +1,4 @@
-<script src="<?php echo SITE_BACK_ASSETS_JS; ?>/islem.js" type="text/javascript"></script>
+<script src="<?php echo SITE_BACK_ASSETS_JS; ?>/islemsemtler.js" type="text/javascript"></script>
 <style type="text/css">
     .well { background: #fff; text-align: center; }
     .modal { text-align: left; }
@@ -13,7 +13,7 @@
                         <h3 class="box-title">Semtler</h3>
                     </div><!-- /.box-header -->  <div align="right"> <button type="button" class="btn btn-primary" id="semtEkle" title="Yeni Semt Ekle" style="margin-right:25px; padding: 10px">Semt EKLE</button></div> 
                     <div class="box-body">
-                        <table id="example1" class="table table-bordered table-striped">
+                        <table id="example1" class="table table-bordered table-hover table-condensed">
                             <thead>
                                 <tr>
                                     <th>Semt Adı</th>
@@ -121,7 +121,17 @@
 <!-- Bootstrap 3.3.5 -->
 <script>
     $(function () {
-        $("#example1").DataTable();
+         grupTable = $("#example1").DataTable({
+            "paging": true,
+            "lengthChange": true,
+            "searching": true,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+            "columnDefs": [
+                {"width": "10%", "targets": 1}
+            ]
+        });
         $('#example2').DataTable({
             "paging": true,
             "lengthChange": false,

@@ -1,4 +1,4 @@
-<script src="<?php echo SITE_BACK_ASSETS_JS; ?>/islem.js" type="text/javascript"></script>
+<script src="<?php echo SITE_BACK_ASSETS_JS; ?>/islemkategori.js" type="text/javascript"></script>
 
 <style type="text/css">
     .well { background: #fff; text-align: center; }
@@ -14,7 +14,7 @@
                             <h3 class="box-title">Kategoriler</h3>
                         </div><!-- /.box-header -->  <div align="right"> <button type="button" class="btn btn-primary" id="katEkle" title="Yeni Kategori Ekle" style="margin-right:25px; padding: 10px">Kategori EKLE</button></div> 
                         <div class="box-body">
-                            <table id="example1" class="table table-bordered table-striped">
+                            <table id="example1" class="table table-bordered table-hover table-condensed">
                                 <thead>
                                     <tr>
                                         <th>Kategori Adı</th>
@@ -30,7 +30,7 @@
                                         <tr id="kattable_<?php echo $model[$k]["KategoriID"]; ?>">
 
                                             <td><?php echo $model[$k]["KategoriAdiTR"]; ?></td>
-                                            <td><?php echo $model[$k]["tur"] == 1 ? '<i class="fa fa-check-square-o fa fa-success "></i>  Klima' : '<i class="fa fa-check-square"></i>  Kombi'; ?></td>
+                                            <td id="<?php echo $model[$k]["tur"]; ?>"><?php echo $model[$k]["tur"] == 1 ? '<i class="fa fa-check-square-o fa fa-success "></i>  Klima' : '<i class="fa fa-check-square"></i>  Kombi'; ?></td>
                                             <td>
                                                 <a id="duzenle" value="<?php echo $model[$k]["KategoriID"]; ?>" class="btn btn-sm btn-success" style="cursor:pointer" title="Düzenle"><i  class="fa fa-edit"></i></a>
                                                 <a id="ksil" value="<?php echo $model[$k]["KategoriID"]; ?>" class="btn btn-sm btn-danger" style="cursor:pointer" title="Sil"><i  class="fa fa-trash"></i></a>
@@ -106,7 +106,7 @@
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">Kategori Türü</label>
                                 <div class="col-sm-9">
-                                    <select class="form-control" id="dgozuksun" name="urunkategori" placeholder="Kategori Seçiniz" required>
+                                    <select class="form-control" id="dkategoritipi" name="urunkategori" placeholder="Kategori Seçiniz" required>
                                         <option value="1">Klima</option>
 
                                         <option  value="2">Kombi</option>
@@ -147,7 +147,17 @@
 <!-- Bootstrap 3.3.5 -->
 <script>
     $(function () {
-        $("#example1").DataTable();
+        grupTable = $("#example1").DataTable({
+            "paging": true,
+            "lengthChange": true,
+            "searching": true,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+            "columnDefs": [
+                {"width": "10%", "targets": 2}
+            ]
+        });
         $('#example2').DataTable({
             "paging": true,
             "lengthChange": false,

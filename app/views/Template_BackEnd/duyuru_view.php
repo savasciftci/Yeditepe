@@ -1,9 +1,6 @@
-<script src="<?php echo SITE_BACK_ASSETS_JS; ?>/islem.js" type="text/javascript"></script>
+<script src="<?php echo SITE_BACK_ASSETS_JS; ?>/islemduyuru.js" type="text/javascript"></script>
 
-<style type="text/css">
-    .well { background: #fff; text-align: center; }
-    .modal { text-align: left; }
-</style>
+
 <link rel="stylesheet" href="<?php echo SITE_BACK_ASSETS_PLUGINS_DATATABLES; ?>/dataTables.bootstrap.css">
     <div class="content-wrapper">
         <section class="content">
@@ -14,7 +11,7 @@
                             <h3 class="box-title">Duyurular</h3>
                         </div><!-- /.box-header -->   
                         <div class="box-body">
-                            <table id="example1" class="table table-bordered table-striped">
+                            <table id="example1" class="table table-bordered table-hover table-condensed">
                                 <thead>
                                     <tr>
                                         <th>Duyuru Başlığı</th>
@@ -31,7 +28,7 @@
                                         <tr id="kattable_<?php echo $model[$k]["DuyuruID"]; ?>">
                                             <td><?php echo $model[$k]["BaslikTR"]; ?></td>
                                             <td><?php echo $model[$k]["AciklamaTR"]; ?></td>
-                                            <td><?php echo $model[$k]["onay"] == 1 ? '<i class="fa fa-check-square-o fa fa-success "></i>  Gozuksünn' : '<i class="fa fa-times"></i>  Gozukmesin'; ?></td>
+                                            <td id="<?php echo $model[$k]["onay"]; ?>"><?php echo $model[$k]["onay"] == 1 ? '<i class="fa fa-check-square-o fa fa-success "></i>  Gozuksünn' : '<i class="fa fa-times"></i>  Gozukmesin'; ?></td>
                                             <td>
                                                 <a id="duyduzenle" value="<?php echo $model[$k]["DuyuruID"]; ?>" class="btn btn-sm btn-success" style="cursor:pointer" title="Düzenle"><i  class="fa fa-edit"></i></a>
                                                 <a id="duysil" value="<?php echo $model[$k]["DuyuruID"]; ?>" class="btn btn-sm btn-danger" style="cursor:pointer" title="Sil"><i  class="fa fa-trash"></i></a>
@@ -107,8 +104,18 @@
 <script src="<?php echo SITE_BACK_ASSETS_DISTJS; ?>/demo.js"></script>
 <!-- Bootstrap 3.3.5 -->
 <script>
-    $(function () {
-        $("#example1").DataTable();
+      $(function () {
+        grupTable = $("#example1").DataTable({
+            "paging": true,
+            "lengthChange": true,
+            "searching": true,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+            "columnDefs": [
+                {"width": "50%", "targets": 1}
+            ]
+        });
         $('#example2').DataTable({
             "paging": true,
             "lengthChange": false,
@@ -117,13 +124,5 @@
             "info": true,
             "autoWidth": false
         });
-    });
-
-    $(".sidebar-toggle").click(function () {
-        if ($('body').hasClass("sidebar-collapse")) {
-            $('body').removeClass("sidebar-collapse");
-        } else {
-            $('body').addClass("sidebar-collapse");
-        }
     });
 </script>

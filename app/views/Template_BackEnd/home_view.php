@@ -16,20 +16,7 @@
 
     <div class="col-lg-4 col-sm-6 col-xs-12" style="margin-top: 50px">
         <!-- small box -->
-        
-            <div class="small-box bg-yellow">
-                <div style="text-align: center" class="inner">
-                    <p style="font-size: 26px">ÜRÜNLER</p>
-                    <h3><?php echo $model[0];?></h3>
-                </div>
-                <a href="<?php echo SITE_URLA; ?>/Urunler" class="small-box-footer">Ürünlere Git<i class="fa fa-arrow-circle-right"></i></a>
-            </div>
-       
-    </div><!-- ./col -->
-
-    <div class="col-lg-4 col-sm-6 col-xs-12" style="margin-top: 50px">
-        <!-- small box -->
-        <div class="small-box bg-yellow">
+        <div class="small-box bg-blue">
             <div style="text-align: center" class="inner">
                 <p style="font-size: 26px">KATEGORİLER</p>
                 <h3><?php echo $model[1];?></h3>
@@ -40,7 +27,7 @@
     </div><!-- ./col -->
        <div class="col-lg-4 col-sm-6 col-xs-12" style="margin-top: 50px">
         <!-- small box -->
-        <div class="small-box bg-yellow">
+        <div class="small-box bg-blue">
             <div style="text-align: center" class="inner">
                 <p style="font-size: 26px">SEMTLER</p>
                 <h3><?php echo $model[2];?></h3>
@@ -50,7 +37,7 @@
          </div><!-- ./col -->
        <div class="col-lg-4 col-sm-6 col-xs-12" style="margin-top: 50px">
         <!-- small box -->
-        <div class="small-box bg-yellow">
+        <div class="small-box bg-blue">
             <div style="text-align: center" class="inner">
                 <p style="font-size: 26px">MAHALLELER</p>
                 <h3><?php echo $model[3];?></h3>
@@ -59,21 +46,65 @@
         </div>
         
     </div><!-- ./col -->
-     <div class="col-lg-4 col-sm-6 col-xs-12" style="margin-top: 50px">
+    <div class="col-lg-4 col-sm-6 col-xs-12" style="margin-top: 50px">
         <!-- small box -->
-        <div class="small-box bg-yellow">
+        <div class="small-box bg-blue">
             <div style="text-align: center" class="inner">
                 <p style="font-size: 26px">DUYURULAR</p>
                 <h3><?php echo $model[4];?></h3>
             </div>
-            <a href="<?php echo SITE_URLA; ?>/duyuru" class="small-box-footer">Duyurular Git <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="<?php echo SITE_URLA; ?>/duyuru" class="small-box-footer">Duyurulara Git <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+        
+    </div><!-- ./col -->
+     <div class="col-lg-4 col-sm-6 col-xs-12" style="margin-top: 50px">
+        <!-- small box -->
+        <div class="small-box bg-blue">
+            <div style="text-align: center" class="inner">
+                <p style="font-size: 26px">MARKALAR</p>
+                <h3><?php echo $model[5];?></h3>
+            </div>
+            <a href="<?php echo SITE_URLA; ?>/markalar" class="small-box-footer">Markalara Git <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+        
+    </div><!-- ./col -->
+    <div class="col-lg-4 col-sm-6 col-xs-12" style="margin-top: 50px">
+        <!-- small box -->
+        <div class="small-box bg-blue">
+            <div style="text-align: center" class="inner">
+                <p style="font-size: 26px">VİTRİNLER</p>
+                <h3><?php echo $model[6];?></h3>
+            </div>
+            <a href="<?php echo SITE_URLA; ?>/vitrin" class="small-box-footer">Duyurular Git <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+        
+    </div><!-- ./col -->
+    <div class="col-lg-4 col-sm-6 col-xs-12" style="margin-top: 50px">
+        <!-- small box -->
+        <div class="small-box bg-blue">
+            <div style="text-align: center" class="inner">
+                <p style="font-size: 26px">YAZILAR</p>
+                <h3><?php echo $model[7];?></h3>
+            </div>
+            <a href="<?php echo SITE_URLA; ?>/yazilar" class="small-box-footer">Duyurular Git <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+        
+    </div><!-- ./col -->
+    <div class="col-lg-4 col-sm-6 col-xs-12" style="margin-top: 50px">
+        <!-- small box -->
+        <div class="small-box bg-blue">
+            <div style="text-align: center" class="inner">
+                <p style="font-size: 26px">HAKKIMIZDA</p>
+                <h3><?php echo $model[8];?></h3>
+            </div>
+            <a href="<?php echo SITE_URLA; ?>/about" class="small-box-footer">Duyurular Git <i class="fa fa-arrow-circle-right"></i></a>
         </div>
         
     </div><!-- ./col -->
 
     <div class="col-lg-4 col-sm-6 col-xs-12" style="margin-top: 50px">
         <!-- small box -->
-        <div class="small-box bg-yellow" >
+        <div class="small-box bg-blue" >
             <div style="text-align: center"class="inner">
                 <p style="font-size: 26px">Genel Ayarlar</p>
                  <h3>1</h3>

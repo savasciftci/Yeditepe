@@ -513,6 +513,33 @@ $(document).on('click', '#duyurduzenle', function (e) {
         }
     });
 });
+$(document).on('click', 'button#sifredegis', function (e) {
+    $("#sifredegismodal").modal('show');
+});
+$(document).on('click', '#sifreDegistirmeIslemi', function (e) {
+
+    var oldpass = $("#oldpass").val();
+    var newpass = $("#newpass").val();
+    $.ajax({
+        type: "post",
+        url: SITE_URL + "/Admin_Ajax",
+        cache: false,
+        dataType: "json",
+        data: {"oldpass": oldpass,  "newpass": newpass, "tip": "changePass"},
+        success: function (cevap) {
+            if (cevap.hata) {
+                reset();
+                alertify.alert(cevap.hata);
+                return false;
+            } else {
+                alertify.success(cevap.result);
+                $("#sifredegismodal").modal('hide');
+                return false;
+            }
+        }
+    });
+});
+
 
 $(document).on('click', 'a#sduzenle', function (e) {
     var id = $(this).attr("value");

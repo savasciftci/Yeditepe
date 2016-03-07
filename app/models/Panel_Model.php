@@ -40,15 +40,35 @@ class Panel_Model extends Model {
         $sql = "SELECT KategoriID,KategoriAdiTR,tur FROM kategori";
         return $this->db->select($sql);
     }
-    
-     public function duyuruselect() {
+
+    public function duyuruselect() {
         $sql = "SELECT * FROM duyuru";
         return $this->db->select($sql);
     }
 
     public function semtselect() {
         $sql = "SELECT * FROM semtler";
-        error_log($sql);
+        //error_log($sql);
+        return $this->db->select($sql);
+    }
+
+    public function markaselect() {
+        $sql = "SELECT * FROM markalar";
+        return $this->db->select($sql);
+    }
+    
+     public function aboutselect() {
+        $sql = "SELECT * FROM hakkimizda";
+        return $this->db->select($sql);
+    }
+    
+    public function yaziselect() {
+        $sql = "SELECT * FROM yazilar";
+        return $this->db->select($sql);
+    }
+    
+    public function vitrinselect() {
+        $sql = "SELECT * FROM vitrin";
         return $this->db->select($sql);
     }
 
@@ -72,12 +92,16 @@ class Panel_Model extends Model {
     public function kategoriinsert($data) {
         return ($this->db->insert("kategori", $data));
     }
+    
+    public function aboutinsert($dataabout) {
+        return ($this->db->insert("hakkimizda", $dataabout));
+    }
 
     public function semtinsert($data) {
         return ($this->db->insert("semtler", $data));
     }
-    
-      public function mahalinsert($dataMahal) {
+
+    public function mahalinsert($dataMahal) {
         return ($this->db->insert("mahalleler", $dataMahal));
     }
 
@@ -85,12 +109,24 @@ class Panel_Model extends Model {
         return ($this->db->insert("urunler", $dataurun));
     }
 
+    public function markainsert($datamarka) {
+        return ($this->db->insert("markalar", $datamarka));
+    }
+    
+    public function vitrininsert($datavitrin) {
+        return ($this->db->insert("vitrin", $datavitrin));
+    }
+    
+    public function yaziinsert($dataYazi) {
+        return ($this->db->insert("yazilar", $dataYazi));
+    }
+
     //kategori select formu
     public function urunselect() {
         $sql = "SELECT urun_id,urun_resim,urun_aciklama,urun_fiyat,urun_kategori,urun_tarih FROM urunler";
         return $this->db->select($sql);
     }
-    
+
     public function mahalleselect() {
         $sql = "SELECT * FROM mahalleler";
         return $this->db->select($sql);
@@ -110,46 +146,83 @@ class Panel_Model extends Model {
     public function kategoriupdate($dataKategori, $gelenid) {
         return ($this->db->update("kategori", $dataKategori, "KategoriID=$gelenid"));
     }
-    
-     public function duyuruupdate($dataDuyuru, $gelenid) {
+
+    public function duyuruupdate($dataDuyuru, $gelenid) {
         return ($this->db->update("duyuru", $dataDuyuru, "DuyuruID=$gelenid"));
     }
     
+    public function passwordupdate($dataSifre, $gelenid) {
+        return ($this->db->update("fwkullanicilar", $dataSifre, "fwkullaniciID=1"));
+    }
+
     public function mahalleupdate($datamahal, $id) {
         return ($this->db->update("mahalleler", $datamahal, "id=$id"));
     }
-    
-      public function semtupdate($dataSemt, $gelenid) {
+
+    public function semtupdate($dataSemt, $gelenid) {
         return ($this->db->update("semtler", $dataSemt, "id=$gelenid"));
+    }
+    
+     public function markupdate($dataMark, $gelenid) {
+        return ($this->db->update("markalar", $dataMark, "id=$gelenid"));
+    }
+    
+    public function vitrinupdate($dataVitrin, $gelenid) {
+        return ($this->db->update("vitrin", $dataVitrin, "VitrinID=$gelenid"));
     }
 
     public function urunupdate($dataUrun, $gelenid) {
         return ($this->db->update("urunler", $dataUrun, "urun_id=$gelenid"));
     }
+    
+    
+    public function aboutupdate($dataAbout, $gelenid) {
+        return ($this->db->update("hakkimizda", $dataAbout, "id=$gelenid"));
+    }
+    
+    public function yaziupdate($dataYazi, $gelenid) {
+        return ($this->db->update("yazilar", $dataYazi, "id=$gelenid"));
+    }
 
     public function urundelete($gelenid) {
         return ($this->db->delete("urunler", "urun_id=$gelenid"));
     }
-    
-      public function mahdelete($gelenid) {
+
+    public function mahdelete($gelenid) {
         return ($this->db->delete("mahalleler", "id=$gelenid"));
     }
 
     public function kategoridelete($gelenid) {
         return ($this->db->delete("kategori", "KategoriID=$gelenid"));
     }
-    
-     public function duyurudelete($gelenid) {
+
+    public function duyurudelete($gelenid) {
         return ($this->db->delete("duyuru", "DuyuruID=$gelenid"));
     }
-    
-     public function semtdelete($gelenid) {
+
+    public function semtdelete($gelenid) {
         return ($this->db->delete("semtler", "id=$gelenid"));
+    }
+    
+    public function markdelete($gelenid) {
+        return ($this->db->delete("markalar", "id=$gelenid"));
+    }
+    
+    public function aboutdelete($gelenid) {
+        return ($this->db->delete("hakkimizda", "id=$gelenid"));
+    }
+    
+    public function yazidelete($gelenid) {
+        return ($this->db->delete("yazilar", "id=$gelenid"));
+    }
+    
+    public function vitrindelete($gelenid) {
+        return ($this->db->delete("vitrin", "VitrinID=$gelenid"));
     }
 
     //login select formu
     public function ayarselect($id) {
-        $sql = "SELECT site_baslik,site_aciklama,is_tel,cep_tel,site_mail,adres,hakkinda FROM ayar WHERE id=1";
+        $sql = "SELECT site_baslik,site_aciklama,is_tel,cep_tel,site_mail,adres FROM ayar WHERE id=1";
         return $this->db->select($sql);
     }
 

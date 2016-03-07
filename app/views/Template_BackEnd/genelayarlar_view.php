@@ -56,14 +56,6 @@
                                     <input type="text" name="genelayaradres" class="form-control" id="adres" placeholder="Adres" value="<?php echo $model[0]["adres"]; ?>" ></input>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label" style="margin-top:30px">Hakkımızda</label>
-                                <div class="col-sm-9">
-                                    <textarea class="form-control" rows="15" id="hakkinda" style="resize:none"><?php echo $model[0]["hakkinda"]; ?></textarea>
-                               </div>
-                               </div>
-
-
                         </div>
                         <div class="box-footer">
                             <button type="button" id="ayarDuzenle" class="btn btn-info pull-right" >Ayarları Değiştir</button>
