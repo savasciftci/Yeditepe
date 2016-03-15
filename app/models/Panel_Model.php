@@ -56,17 +56,17 @@ class Panel_Model extends Model {
         $sql = "SELECT * FROM markalar";
         return $this->db->select($sql);
     }
-    
-     public function aboutselect() {
+
+    public function aboutselect() {
         $sql = "SELECT * FROM hakkimizda";
         return $this->db->select($sql);
     }
-    
+
     public function yaziselect() {
         $sql = "SELECT * FROM yazilar";
         return $this->db->select($sql);
     }
-    
+
     public function vitrinselect() {
         $sql = "SELECT * FROM vitrin";
         return $this->db->select($sql);
@@ -92,7 +92,7 @@ class Panel_Model extends Model {
     public function kategoriinsert($data) {
         return ($this->db->insert("kategori", $data));
     }
-    
+
     public function aboutinsert($dataabout) {
         return ($this->db->insert("hakkimizda", $dataabout));
     }
@@ -112,11 +112,11 @@ class Panel_Model extends Model {
     public function markainsert($datamarka) {
         return ($this->db->insert("markalar", $datamarka));
     }
-    
+
     public function vitrininsert($datavitrin) {
         return ($this->db->insert("vitrin", $datavitrin));
     }
-    
+
     public function yaziinsert($dataYazi) {
         return ($this->db->insert("yazilar", $dataYazi));
     }
@@ -150,7 +150,7 @@ class Panel_Model extends Model {
     public function duyuruupdate($dataDuyuru, $gelenid) {
         return ($this->db->update("duyuru", $dataDuyuru, "DuyuruID=$gelenid"));
     }
-    
+
     public function passwordupdate($dataSifre, $gelenid) {
         return ($this->db->update("fwkullanicilar", $dataSifre, "fwkullaniciID=1"));
     }
@@ -162,24 +162,27 @@ class Panel_Model extends Model {
     public function semtupdate($dataSemt, $gelenid) {
         return ($this->db->update("semtler", $dataSemt, "id=$gelenid"));
     }
-    
-     public function markupdate($dataMark, $gelenid) {
+
+    public function markupdate($dataMark, $gelenid) {
         return ($this->db->update("markalar", $dataMark, "id=$gelenid"));
     }
-    
+
     public function vitrinupdate($dataVitrin, $gelenid) {
         return ($this->db->update("vitrin", $dataVitrin, "VitrinID=$gelenid"));
+    }
+
+    public function vitrinsiraupdate($dataSira, $gelenid) {
+        return ($this->db->update("vitrin", $dataSira, "VitrinID=$gelenid"));
     }
 
     public function urunupdate($dataUrun, $gelenid) {
         return ($this->db->update("urunler", $dataUrun, "urun_id=$gelenid"));
     }
-    
-    
+
     public function aboutupdate($dataAbout, $gelenid) {
         return ($this->db->update("hakkimizda", $dataAbout, "id=$gelenid"));
     }
-    
+
     public function yaziupdate($dataYazi, $gelenid) {
         return ($this->db->update("yazilar", $dataYazi, "id=$gelenid"));
     }
@@ -203,26 +206,26 @@ class Panel_Model extends Model {
     public function semtdelete($gelenid) {
         return ($this->db->delete("semtler", "id=$gelenid"));
     }
-    
+
     public function markdelete($gelenid) {
         return ($this->db->delete("markalar", "id=$gelenid"));
     }
-    
+
     public function aboutdelete($gelenid) {
         return ($this->db->delete("hakkimizda", "id=$gelenid"));
     }
-    
+
     public function yazidelete($gelenid) {
         return ($this->db->delete("yazilar", "id=$gelenid"));
     }
-    
+
     public function vitrindelete($gelenid) {
         return ($this->db->delete("vitrin", "VitrinID=$gelenid"));
     }
 
     //login select formu
     public function ayarselect($id) {
-        $sql = "SELECT site_baslik,site_aciklama,is_tel,cep_tel,site_mail,adres FROM ayar WHERE id=1";
+        $sql = "SELECT * FROM ayar WHERE id=1";
         return $this->db->select($sql);
     }
 

@@ -31,27 +31,47 @@ $(document).on("click", "button#profilDuzenle", function (e) {
                 return false;
             } else {
                 reset();
+                
                 alertify.success(cevap.result);
+                setTimeout(function() { window.location=window.location;},3000);
                 return false;
             }
         }
     });
 });
 $(document).on("click", "button#ayarDuzenle", function (e) {
+    var formData = new FormData();
     var baslik = $("#baslik").val();
     var aciklama = $("#aciklama").val();
     var is = $("#is").val();
+    var is3 = $("#is3").val();
+    var is4 = $("#is4").val();
+    var iframe = $("#iframe").val();
     var cep = $("#cep").val();
     var mail = $("#mail").val();
     var adres = $("#adres").val();
-    var hakkinda = $("#hakkinda").val();
-
+    var fileInput = $("#fileInput").val();
+  formData.append('baslik', baslik);
+    formData.append('aciklama', aciklama);
+    formData.append('is', is);
+    formData.append('cep', cep);
+    formData.append('iframe', iframe);
+    formData.append('is3', is3);
+    formData.append('is4', is4);
+    formData.append('mail', mail);
+    formData.append('adres', adres);
+    formData.append('file', $("#fileInput")[0].files[0]);
+    formData.append('tip', "ayarDuzenle")
     $.ajax({
         type: "post",
         url: SITE_URL + "/Admin_Ajax",
         cache: false,
         dataType: "json",
-        data: {"baslik": baslik, "aciklama": aciklama, "is": is, "cep": cep, "mail": mail, "adres": adres,"hakkinda":hakkinda, "tip": "ayarDuzenle"},
+        data: formData,
+        async: false,
+        contentType: false,
+        enctype: 'multipart/form-data',
+        processData: false,
         success: function (cevap) {
             if (cevap.hata) {
                 reset();
@@ -59,8 +79,10 @@ $(document).on("click", "button#ayarDuzenle", function (e) {
                 return false;
             } else {
                 reset();
+                setTimeout(function() { window.location=window.location;},3000);
                 alertify.success(cevap.result);
                 return false;
+                
             }
         }
     });

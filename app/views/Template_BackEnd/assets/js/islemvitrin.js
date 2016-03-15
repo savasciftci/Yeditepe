@@ -16,8 +16,9 @@ $(document).on('click', 'a#vitrinsil', function (e) {
                         alertify.alert(cevap.hata);
                         return false;
                     } else {
-                        $("tr#uruntable_" + id).remove();
+                        $("tr#" + id).remove();
                         reset();
+                        setTimeout(function() { window.location=window.location;},2000);
                         alertify.success(cevap.result);
                         return false;
                     }
@@ -81,17 +82,17 @@ $(document).on('click', '#vitrinEklemeIslemi', function (e) {
         }
     });
 });
-
+var normalsirasi = 0;
 $(document).on('click', 'a#vitrinduzenle', function (e) {
     var dosyaAlaniMarka = document.getElementById('fileDisplayAreaMarka');
     dosyaAlaniMarka.innerHTML = "";
     var id = $(this).attr("value");
-    var sirasi = $(this).parent().parent().find('td:eq(1)').text();
+    normalsirasi = $(this).parent().parent().find('td:eq(1)').text();
     var url = $(this).parent().parent().find('td:eq(2)').text();
     var vitrinkategorii = $(this).parent().parent().find('td:eq(3)').attr("id");
     $("#fileDisplayAreaMarka").append('<img src="http://localhost/Yeditepe/upload/vitrinler/' + $(this).parent().parent().find('td:eq(0)').text() + ' " class="img-responsive" alt="Marka Image">');
     $("#sakliID").val(id);
-    $("#dvitrinsirasi").val(sirasi);
+    $("#dvitrinsirasi").val(normalsirasi);
     $("#dvitrinurl").val(url);
     $("#dvitrinkategori").val(vitrinkategorii);
     $("#markModal").modal('show');
@@ -99,39 +100,44 @@ $(document).on('click', 'a#vitrinduzenle', function (e) {
 
 
 $(document).on('click', '#vitrinDuzenle', function (e) {
+    console.log("normalsirasi" + normalsirasi);
     var formData = new FormData();
-    var sirasi = $("#dvitrinsirasi").val();
+    var sira = $("#dvitrinsirasi").val();
     var url = $("#dvitrinurl").val();
     var vitrinkategorii = $("#dvitrinkategori").val();
     var vitrinAdi = $("#dvitrinkategori option[value=" + vitrinkategorii + "]").text();
     var id = $("#sakliID").val();
-    formData.append('sirasi', sirasi);
-    formData.append('normalSira', normalSira);
-    var trlength = $("#vitrintbody tr").length;
-    var maksSira = 0;
-    var degisecekID = 0;
-    if (normalSira != sira) {
-        for (var a = 0; a < trlength; a++) {
-            var trID = $("#vitrintbody tr:eq(" + a + ")").attr("id");
-            console.log("ID-->" + trID);
-            var sirasi = $("#vitrinsira" + trID).text();
-            console.log("Sıra" + sirasi);
-            if (sirasi == sira) {
-                degisecekID = trID;
-            }
-        }
-    }
-
-    formData.append('ID', ID);
-    formData.append('baslik', baslik);
-    formData.append('yazi', yazi);
-    formData.append('degisecekID', degisecekID);
-    formData.append('maxSira', maksSira);
     formData.append('vitrinkategorii', vitrinkategorii);
+    formData.append('sirasi', sira);
     formData.append('url', url);
     formData.append('id', id);
     formData.append('file', $("#fileInputMarkaDuzen")[0].files[0]);
     formData.append('tip', "vitrinDuzenle");
+    formData.append('normalSira', normalsirasi);
+    var trlength = $("#vitrintbody tr").length;
+    var maksSira = 0;
+    var degisecekID = 0;
+    if (normalsirasi != sira) {
+        for (var a = 0; a < trlength; a++) {
+            var trID = $("#vitrintbody tr:eq(" + a + ")").attr("id");
+            //console.log("ID-->" + trID);
+            var sirasi = $("#vitrinsira" + trID).text();
+            //console.log(sirasi);
+            if (sira == sirasi) {
+                degisecekID = trID;
+                console.log("değişecek-->" + degisecekID);
+            }
+        }
+    }
+//    alert(normalsirasi);
+//    alert(sira);
+//    alert(id);
+//    alert(degisecekID);
+    formData.append('id', id);
+    formData.append('degisecekID', degisecekID);
+    formData.append('degisecekSira', normalsirasi);
+    formData.append('sira', sira);
+    formData.append('degisecekID', degisecekID);
     $.ajax({
         type: "post",
         url: SITE_URL + "/Admin_Ajax",
@@ -149,17 +155,17 @@ $(document).on('click', '#vitrinDuzenle', function (e) {
                 return false;
             } else {
                 if ($("#fileInputMarkaDuzen")[0].files[0] != "") {
-                    $("tr#uruntable_" + id + " td:eq(1)").text(cevap.yol);
+                    $("tr#" + id + " td:eq(1)").text(cevap.yol);
                 }
-                $("tr#uruntable_" + id + " td:eq(1)").text(sirasi);
-                $("tr#uruntable_" + id + " td:eq(2)").text(url);
+                $("tr#" + id + " td:eq(1)").text(sirasi);
+                $("tr#" + id + " td:eq(2)").text(url);
                 var durumText;
                 if (vitrinkategorii == 1) {
                     durumText = 'Değiştirildi => Aktif';
                 } else {
                     durumText = 'Değiştirildi => Pasif';
                 }
-                $("tr#uruntable_" + id + " td:eq(3)").text(durumText);
+                $("tr#" + id + " td:eq(3)").text(durumText);
                 reset();
                 alertify.success(cevap.result);
                 $("#markModal").modal('hide');

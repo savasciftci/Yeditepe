@@ -35,12 +35,6 @@
                                     </tr>
                                 <?php } ?>
                             </tbody>
-                            <tfoot>
-                                <tr>
-                                    <th>Kategori Adı</th>
-                                    <th>İşlemler</th>
-                                </tr>
-                            </tfoot>
                         </table>
                     </div><!-- /.box-body -->
                 </div><!-- /.box -->

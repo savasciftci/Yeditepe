@@ -36,14 +36,6 @@
                                         </tr>
                                     <?php } ?>
                                 </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <th>Duyuru Başlığı</th>
-                                        <th>Duyuru Aciklama</th>
-                                        <th>Anasayfada Gözükme Durumu</th>
-                                        <th>Düzenle</th>
-                                    </tr>
-                                </tfoot>
                             </table>
                         </div><!-- /.box-body -->
                     </div><!-- /.box -->

@@ -1,4 +1,4 @@
-<script src="<?php echo SITE_BACK_ASSETS_JS; ?>/islemvitrin.js" type="text/javascript"></script>
+<script src="<?php echo SITE_BACK_ASSETS_JS; ?>/islem.js" type="text/javascript"></script>
 <script src="<?php echo SITE_BACK_ASSETS_BOOTSTRAPJS; ?>/bootstrap.min.js"></script>
 <link rel="stylesheet" href="<?php echo SITE_BACK_ASSETS_PLUGINS_DATATABLES; ?>/dataTables.bootstrap.css"></link>
 <div class="content-wrapper">
@@ -7,136 +7,138 @@
             <div class="col-xs-12">
                 <div class="box">
                     <div class="box-header">
-                        <h3 class="box-title">Vitrin</h3>
+                        <h3 class="box-title">Ürünler</h3>
                     </div><!-- /.box-header --> 
                     <div align="right"> 
-                        <button type="button" class="btn btn-primary" id="vitrinEkle" title="Yeni Vitrin Ekle" style="margin-right:25px; padding: 10px">Vitrin EKLE</button>
+                        <button type="button" class="btn btn-primary" id="urunEkle" title="Yeni Ürün Ekle" style="margin-right:25px; padding: 10px">Ürün EKLE</button>
                     </div> 
                     <div class="box-body">
                         <table id="example1" class="table table-bordered table-hover table-condensed">
                             <thead>
                                 <tr>
-                                    <th>Vitrin Resim</th>
-                                    <th>Sıra</th>
-                                    <th>Url</th>
-                                    <th>Aktiflik</th>
+                                    <th>Ürün Açıklama</th>
+                                    <th>Ürün Fiyat</th>
+                                    <th>Ürün Kategori</th>
+                                    <th>Ürün Eklenme Tarih</th>
                                     <th>İşlemler</th>
                                 </tr>
-                            </thead>
-                            <tbody id="vitrintbody">
-                                <?php
-                                for ($k = 0; $k < count($model); $k++) {
-                                    ?>
-                                    <tr id="<?php echo $model[$k]["VitrinID"]; ?>">
-                                        <td id="vitrinresim<?php echo $model[$k]['VitrinID']; ?>"><?php echo $model[$k]["VitrinResim"]; ?></td>
-                                        <td id="vitrinsira<?php echo $model[$k]['VitrinID']; ?>"><?php echo $model[$k]["Sira"]; ?></td>
-                                        <td id="vitrinurl<?php echo $model[$k]['VitrinID']; ?>"><?php echo $model[$k]["url"]; ?></td>
-                                        <td id="<?php echo $model[$k]["Aktiflik"]; ?>"><?php echo $model[$k]["Aktiflik"] == 1 ? '<i class="fa fa-check-square-o fa fa-success "></i>  Aktif' : '<i class="fa fa-times"></i>  Pasif'; ?></td>
-                                        <input type="hidden" id="mark_resim" value="<?php echo SITE_URLUResim . $model[$k]["ResimYolu"]; ?>" >
-                                        <td>
-                                            <a id="vitrinduzenle" value="<?php echo $model[$k]["VitrinID"]; ?>" class="btn btn-sm btn-success" style="cursor:pointer" title="Düzenle"><i  class="fa fa-edit"></i></a>
-                                            <a id="vitrinsil" value="<?php echo $model[$k]["VitrinID"]; ?>" class="btn btn-sm btn-danger" style="cursor:pointer" title="Sil"><i  class="fa fa-trash"></i></a>
+                            <tbody id="vitrintbody" class="">
+                                <?php for ($vitrin = 0; $vitrin < count($model); $vitrin++) { ?>
+                                    <tr id="<?php echo $model[$vitrin]['ID']; ?>">
+                                        <td id="vitrinad<?php echo $model[$vitrin]['ID']; ?>"><?php echo $model[$vitrin]['Baslik']; ?></td>
+                                        <td id="vitrinaktif<?php echo $model[$vitrin]['ID']; ?>" data-aktif="<?php echo $model[$vitrin]['Aktif']; ?>" class="hidden-xs"><?php echo $model[$vitrin]['Aktif'] == 1 ? "Aktif" : "Pasif"; ?></td>
+                                        <td id="vitrinsira<?php echo $model[$vitrin]['ID']; ?>" class="hidden-xs"><?php echo $model[$vitrin]['Sira']; ?></td>
+                                        <td class="text-right">
+                                            <a id="vitrinduzenle" href="#" class="btn btn-warning btn-sm" title="Düzenle"><i class="fa fa-edit"></i></a>
+                                            <a id="vitrinSil" class="btn btn-danger btn-sm" title="Sil"><i class="fa fa-trash"></i></a>
                                         </td>
                                     </tr>
                                 <?php } ?>
-                            </tbody>                               
+                            </tbody>                              
                         </table>
                     </div><!-- /.box-body -->
                 </div><!-- /.box -->
             </div><!-- /.col -->
         </div><!-- /.row -->
     </section><!-- /.content -->
-    <div id="vitrinEkleModal" class="modal fade">
+    <div id="urunEkleModal" class="modal fade">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Vitrin Ekle</h4>
+                    <h4 class="modal-title">Ürün Ekle</h4>
                 </div>
                 <div class="modal-body">
                     <form class="form-horizontal">
                         <div class="box-body">
                             <div class="form-group">
-                                <label for="urunresim">Vitrin Resmi</label>
+                                <label for="urunresim">Ürün Resmi</label>
                                 <input id="fileInput" name="fileInput" class="form-control" type="file" />
                                 <div id="fileDisplayArea" style="margin-top: 2em;width: 100%;overflow-x: auto;"></div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">Sıra</label>
+                                <label class="col-sm-3 control-label">Ürün Açıklaması</label>
                                 <div class="col-sm-9">
-                                    <input type="number" class="form-control" id="sirasii" name="markadii" placeholder="Sırasını belirleyiniz" value="" required>
+                                    <input type="text" class="form-control" id="edurunAciklama" name="durunAciklama" placeholder="Ürün ile ilgili açıklamanızı giriniz" value="" required>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">Aktiflik Durumu</label>
+                                <label class="col-sm-3 control-label">Ürün Kategorisi</label>
                                 <div class="col-sm-9">
-                                    <select class="form-control" id="vitrinkategori" name="dmarkakategori" placeholder="Kategori Seçiniz" required>
-                                        <option value="1">Aktif</option>
-                                        <option  value="0">Pasif</option>
+                                    <select class="form-control" id="edurunKategori" name="durunKategori" required>
+                                        <option value="-1" selected>Kategori Seçiniz</option>
+                                        <?php
+                                        $miktar = count($model[1]);
+                                        for ($k = 0; $k < $miktar; $k++) {
+                                            ?>
+                                            <option  value="<?php echo $model[1][$k]["ID"]; ?>"><?php echo $model[1][$k]["ad"]; ?></option>
+                                        <?php } ?>
                                     </select>
                                 </div>    
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">Url</label>
+                                <label class="col-sm-3 control-label">Fiyat</label>
                                 <div class="col-sm-9">
-                                    <input type="text" id="vitrinurl" class="form-control" name="markaurl" placeholder="Url adresini giriniz" value="" required></input>
+                                    <input type="text" id="edurunFiyat" class="form-control" name="durunFiyat" placeholder="Fiyat" value="" required></input>
                                 </div>
                             </div>
                         </div>
                     </form>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Vazgeç</button>
-                        <button type="button" class="btn btn-primary" id="vitrinEklemeIslemi">Ekle</button>
+                        <button type="button" class="btn btn-primary" id="urunEklemeIslemi">Ekle</button>
                     </div>
                 </div>
             </div>
         </div>
     </div> 
-    <div id="markModal" class="modal fade">
+    <div id="urunModal" class="modal fade">
         <div class="modal-dialog">
             <input type="hidden" id="sakliID" value="">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Vitrin Düzenle</h4>
+                    <h4 class="modal-title">Ürün Düzenle</h4>
                 </div>
                 <div class="modal-body">
                     <form class="form-horizontal">
                         <div class="box-body">
                             <div class="form-group">
-                                <label for="urunresim">Vitrin Resmi</label>
-                                <div id="ilkresimm" class="col-sm-3">
-                                 </div>
-                                <input id="fileInputMarkaDuzen" name="fileInputMarkaDuzen" class="form-control" type="file" />
-                                <div id="fileDisplayAreaMarka" style="margin-top: 2em;width: 100%;overflow-x: auto;"></div>
+                                <label for="urunresim">Ürün Resmi</label>
+                                <input id="resimGuncelle" name="resimGuncelle" class="form-control" type="file" />
+                                <div id="dosyaAlani" style="margin-top: 2em;width: 100%;overflow-x: auto;"></div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">Sırası</label>
+                                <label class="col-sm-3 control-label">Ürün Açıklaması</label>
                                 <div class="col-sm-9">
-                                    <input type="number" class="form-control" id="dvitrinsirasi" name="dvitrinsirasi" placeholder="Ürün ile ilgili açıklamanızı giriniz" value="" required>
+                                    <input type="text" class="form-control" id="durunAciklama" name="durunAciklama" placeholder="Ürün ile ilgili açıklamanızı giriniz" value="" required>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">Durumu</label>
+                                <label class="col-sm-3 control-label">Ürün Kategorisi</label>
                                 <div class="col-sm-9">
-                                    <select class="form-control" id="dvitrinkategori" name="vitrinkategori" required>
-                                        <option value="-1" selected>Durum Seçiniz</option>
-                                        <option  value="1">Aktif</option>
-                                        <option  value="0">Pasif</option>
+                                    <select class="form-control" id="urunkategori" name="urunkategori" required>
+                                        <option value="-1" selected>Kategori Seçiniz</option>
+                                        <?php
+                                        $miktar = count($model[1]);
+                                        for ($k = 0; $k < $miktar; $k++) {
+                                            ?>
+                                            <option  value="<?php echo $model[1][$k]["ID"]; ?>"><?php echo $model[1][$k]["ad"]; ?></option>
+                                        <?php } ?>
                                     </select>
                                 </div>     
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">URL</label>
+                                <label class="col-sm-3 control-label">Fiyat</label>
                                 <div class="col-sm-9">
-                                    <input type="text" id="dvitrinurl" class="form-control" name="dmarkurl" placeholder="Url" value="" required></input>
+                                    <input type="text" id="durunFiyat" class="form-control" name="durunFiyat" placeholder="Fiyat" value="" required></input>
                                 </div>
                             </div>
                         </div>
                     </form>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Vazgeç</button>
-                        <button type="button" class="btn btn-primary" id="vitrinDuzenle">Düzenle</button>
+                        <button type="button" class="btn btn-primary" id="urunDuzenle">Düzenle</button>
                     </div>
                 </div>
             </div>
@@ -164,17 +166,7 @@
 <!-- Bootstrap 3.3.5 -->
 <script>
     $(function () {
-    grupTable = $("#example1").DataTable({
-            "paging": true,
-            "lengthChange": true,
-            "searching": true,
-            "ordering": true,
-            "info": true,
-            "autoWidth": false,
-            "columnDefs": [
-                {"width": "10%", "targets": 4}
-            ]
-        });
+        $("#example1").DataTable();
         $('#example2').DataTable({
             "paging": true,
             "lengthChange": false,

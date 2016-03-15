@@ -9,6 +9,7 @@ define("SITE_URL", "http://localhost/Yeditepe");
 define("SITE_URLA", "http://localhost/Yeditepe/Admin");
 define("SITE_URLUResim", "http://localhost/Yeditepe/upload/urunler/");
 define("SITE_PROFILRESIM", "http://localhost/Yeditepe/upload/profil/");
+define("SITE_LOGO", "http://localhost/Yeditepe/upload/logo/");
 
 //site back end 
 define("SITE_BACK_ASSETS", "http://localhost/Yeditepe/app/views/Template_BackEnd/assets");

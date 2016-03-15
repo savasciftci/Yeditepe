@@ -20,6 +20,14 @@
                     <input type="hidden" class="form-control" id="profilid" value="" required>
                     <form class="form-horizontal">
                         <div class="box-body">
+                            <div class="form-group" >
+                                <label for="pemail" class="col-sm-2 control-label"></label>
+                                <div class="col-sm-10">
+                                    <div id="fileDisplayArea" class="col-sm-3">
+                                        <img src="<?php echo SITE_LOGO; ?>/<?php echo $model[0]["resim"]; ?>" class=" img-responsive" alt="User Image">
+                                    </div>
+                                </div>
+                            </div>
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">Site Başlık</label>
                                 <div class="col-sm-9">
@@ -33,15 +41,33 @@
                                 </div>
                             </div>
                             <div class="form-group">
+                                <label class="col-sm-3 control-label">Harita İframe</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="iframe" name="genelayarbaslik" placeholder="Harita iframe" value="<?php echo $model[0]["iframe"]; ?>" ></input>
+                                </div>
+                            </div>
+                            <div class="form-group">
                                 <label class="col-sm-3 control-label">İş Tel</label>
                                 <div class="col-sm-9">
                                     <input type="text" class="form-control"id="is" name="genelayartel" placeholder="Telefon" value="<?php echo $model[0]["is_tel"]; ?>" ></input>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">Cep Tel</label>
+                                <label class="col-sm-3 control-label">Tel 2</label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control"id="cep" name="genelayarceptel" placeholder="Cep Telefonu" value="<?php echo $model[0]["cep_tel"]; ?>" ></input>
+                                    <input type="text" class="form-control"id="cep" name="genelayarceptel" placeholder="Telefonu" value="<?php echo $model[0]["cep_tel"]; ?>" ></input>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Tel 3</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control"id="is3" name="genelayarceptel" placeholder="Telefonu" value="<?php echo $model[0]["is_tel3"]; ?>" ></input>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Tel 4</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control"id="is4" name="genelayarceptel" placeholder="Telefonu" value="<?php echo $model[0]["is_tel4"]; ?>" ></input>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -56,6 +82,13 @@
                                     <input type="text" name="genelayaradres" class="form-control" id="adres" placeholder="Adres" value="<?php echo $model[0]["adres"]; ?>" ></input>
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <label for="fileInput" class="col-sm-2 control-label">Logo Resmi </br><p class="text-gray">(Logo resmini güncellemek için kullanınız.)</p> </label>
+                                <div class="col-sm-10">
+                                    <input id="fileInput" name="fileInput" class="form-control" type="file" />
+                                    <div id="fileDisplayArea" style="margin-top: 2em;width: 100%;overflow-x: auto;"></div>   
+                                </div>
+                            </div>  
                         </div>
                         <div class="box-footer">
                             <button type="button" id="ayarDuzenle" class="btn btn-info pull-right" >Ayarları Değiştir</button>

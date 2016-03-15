@@ -19,8 +19,10 @@ $(document).on('click', 'a#ksil', function (e) {
                     } else {
                         $("tr#kattable_" + id).remove();
                         reset();
+                        setTimeout(function() { window.location=window.location;},2000);
                         alertify.success(cevap.result);
                         return false;
+                        
                     }
                 }
             });

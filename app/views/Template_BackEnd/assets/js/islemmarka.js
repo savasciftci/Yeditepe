@@ -21,6 +21,7 @@ $(document).on('click', 'a#markasil', function (e) {
                     } else {
                         $("tr#uruntable_" + id).remove();
                         reset();
+                        setTimeout(function() { window.location=window.location;},2000);
                         alertify.success(cevap.result);
                         return false;
                     }

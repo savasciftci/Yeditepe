@@ -20,155 +20,6 @@ class Admin_Ajax extends Controller {
             $form->post("tip", true);
             $tip = $form->values['tip'];
             Switch ($tip) {
-                case "profilDuzenle":
-                    require "app/otherClasses/class.upload.php";
-                    $form->post("ad", true);
-                    $form->post("adres", true);
-                    $form->post("sehir", true);
-                    $form->post("cinsiyetval", true);
-                    $form->post("email", true);
-                    $ad = $form->values['ad'];
-                    $adres = $form->values['adres'];
-                    $sehir = $form->values['sehir'];
-                    $cinsiyetval = $form->values['cinsiyetval'];
-                    $email = $form->values['email'];
-                    if ($ad != "") {
-                        if ($adres != "") {
-                            if ($sehir != "") {
-                                if ($cinsiyetval != 0) {
-                                    if ($email != "") {
-                                        $realName = $_FILES['file']['name'];
-                                        if ($realName != "") {
-                                            $image = new Upload($_FILES['file']);
-                                            if ($image->uploaded) {
-                                                // sadece resim formatları yüklensin
-                                                $image->allowed = array('image/*');
-                                                $image->image_min_height = 250;
-                                                $image->image_min_width = 250;
-                                                $image->image_max_height = 2000;
-                                                $image->image_max_width = 2000;
-                                                $image->file_new_name_body = time();
-                                                $image->file_name_body_pre = 'profil_';
-                                                $image->image_resize = true;
-                                                $image->image_ratio_crop = true;
-                                                $image->image_x = 900;
-                                                $image->image_y = 900;
-                                                $image->Process("upload/profil");
-                                                if ($image->processed) {
-                                                    $id = Session::get("ID");
-                                                    if ($form->submit()) {
-                                                        Session::set("presim", $image->file_dst_name);
-                                                        $dataProfil = array(
-                                                            'fwkullaniciAd' => $ad,
-                                                            'fwkullaniciAdres' => $adres,
-                                                            'fwkullaniciSehir' => $sehir,
-                                                            'fwkullaniciCinsiyet' => $cinsiyetval,
-                                                            'fwkullaniciEmail' => $email,
-                                                            'fwkullanici_Resim' => $image->file_dst_name
-                                                        );
-                                                    }
-                                                    $result = $Panel_Model->profilupdate($dataProfil, $id);
-                                                    if ($result) {
-                                                        $sonuc["result"] = "Başarılı bir şekilde güncellenme olmuştur.";
-                                                    } else {
-                                                        $sonuc["hata"] = "Bir hata oluştu.Tekrar deneyiniz";
-                                                    }
-                                                } else {
-                                                    $sonuc["hata"] = $image->error;
-                                                }
-                                            } else {
-                                                $sonuc["hata"] = $image->error;
-                                            }
-                                        } else {
-                                            if ($form->submit()) {
-                                                $dataProfil = array(
-                                                    'fwkullaniciAd' => $ad,
-                                                    'fwkullaniciAdres' => $adres,
-                                                    'fwkullaniciSehir' => $sehir,
-                                                    'fwkullaniciCinsiyet' => $cinsiyetval,
-                                                    'fwkullaniciEmail' => $email
-                                                );
-                                            }
-                                            $result = $Panel_Model->profilupdate($dataProfil, $id);
-                                            if ($result) {
-                                                $sonuc["result"] = "Başarılı bir şekilde güncellenme olmuştur.";
-                                            } else {
-                                                $sonuc["hata"] = "Bir hata oluştu.Lütfen Resim Seçip Tekrar deneyiniz";
-                                            }
-                                        }
-                                    } else {
-                                        $sonuc["hata"] = "Lütfen maili boş girmeyiniz.";
-                                    }
-                                } else {
-                                    $sonuc["hata"] = "Lütfen cinsiyeti boş girmeyiniz.";
-                                }
-                            } else {
-                                $sonuc["hata"] = "Lütfen şehri boş girmeyiniz.";
-                            }
-                        } else {
-                            $sonuc["hata"] = "Lütfen adresi boş girmeyiniz.";
-                        }
-                    } else {
-                        $sonuc["hata"] = "Lütfen adınızı boş girmeyiniz.";
-                    }
-                    break;
-                case "ayarDuzenle":
-                    $form->post("baslik", true);
-                    $form->post("aciklama", true);
-                    $form->post("is", true);
-                    $form->post("cep", true);
-                    $form->post("mail", true);
-                    $form->post("adres", true);
-                    $form->post("hakkinda", true);
-                    $baslik = $form->values['baslik'];
-                    $aciklama = $form->values['aciklama'];
-                    $is = $form->values['is'];
-                    $cep = $form->values['cep'];
-                    $mail = $form->values['mail'];
-                    $adres = $form->values['adres'];
-                    $hakkinda = $form->values['hakkinda'];
-                    if ($baslik != "") {
-                        if ($aciklama != "") {
-                            if ($is != "") {
-                                if ($cep != "") {
-                                    if ($mail != "") {
-                                        if ($adres != "") {
-                                            $id = 1;
-                                            if ($form->submit()) {
-                                                $dataAyar = array(
-                                                    'site_baslik' => $baslik,
-                                                    'site_aciklama' => $aciklama,
-                                                    'is_tel' => $is,
-                                                    'cep_tel' => $cep,
-                                                    'site_mail' => $mail,
-                                                    'adres' => $adres
-                                                );
-                                            }
-                                            $result = $Panel_Model->ayarupdate($dataAyar, $id);
-                                            if ($result) {
-                                                $sonuc["result"] = "Başarılı bir şekilde güncellenme olmuştur.";
-                                            } else {
-                                                $sonuc["hata"] = "Bir hata oluştu.Tekrar deneyiniz";
-                                            }
-                                        } else {
-                                            $sonuc["hata"] = "Lütfen adresi boş bırakmayınız.";
-                                        }
-                                    } else {
-                                        $sonuc["hata"] = "Lütfen maili boş girmeyiniz.";
-                                    }
-                                } else {
-                                    $sonuc["hata"] = "Lütfen cep telefonu boş bırakmayınız.";
-                                }
-                            } else {
-                                $sonuc["hata"] = "Lütfen is telefonu boş bırakmayınız.";
-                            }
-                        } else {
-                            $sonuc["hata"] = "Lütfen acıklamayı boş bırakmayınız.";
-                        }
-                    } else {
-                        $sonuc["hata"] = "Lütfen basliği boş girmeyiniz.";
-                    }
-                    break;
                 case "profilSil":
                     $form->post("yeniveri", true);
                     $id = $form->values['yeniveri'];
@@ -647,6 +498,34 @@ class Admin_Ajax extends Controller {
                             $realName = $_FILES['file']['name'];
                             if ($realName != "") {
                                 $image = new Upload($_FILES['file']);
+                                $image = new Upload($_FILES['file']);
+                                $width = $image->image_src_x;
+                                $height = $image->image_src_y;
+                                $oran = $width / $height;
+                                if ($oran < 1) {
+                                    $newheight = 400;
+                                    $newwidth = round($height * $oran);
+                                } else if ($oran == 1) {
+                                    $newheight = 400;
+                                    $newwidth = 500;
+                                } else {
+                                    $newheight = round($width / $oran);
+                                    $newwidth = 500;
+                                }
+                                //oranlama
+                                $width = $image->image_src_x;
+                                $height = $image->image_src_y;
+                                $oran = $width / $height;
+                                if ($oran < 1) {
+                                    $newheight = 400;
+                                    $newwidth = round($height * $oran);
+                                } else if ($oran == 1) {
+                                    $newheight = 400;
+                                    $newwidth = 500;
+                                } else {
+                                    $newheight = round($width / $oran);
+                                    $newwidth = 500;
+                                }
                                 if ($image->uploaded) {
                                     // sadece resim formatları yüklensin
                                     $image->allowed = array('image/*');
@@ -658,8 +537,8 @@ class Admin_Ajax extends Controller {
                                     $image->file_name_body_pre = 'marka_';
                                     $image->image_resize = true;
                                     $image->image_ratio_crop = true;
-                                    $image->image_x = 900;
-                                    $image->image_y = 900;
+                                    $image->image_x = 217;
+                                    $image->image_y = 122;
                                     $image->Process("upload/markalar");
                                     if ($image->processed) {
                                         if ($form->submit()) {
@@ -705,21 +584,298 @@ class Admin_Ajax extends Controller {
                         $sonuc["hata"] = "Lütfen marka adını boş bırakmayınız.";
                     }
                     break;
+                case "ayarDuzenle":
+                    require "app/otherClasses/class.upload.php";
+                    $form->post("baslik", true);
+                    $form->post("aciklama", true);
+                    $form->post("is", true);
+                    $form->post("is3", true);
+                    $form->post("is4", true);
+                    $form->post("iframe", true);
+                    $form->post("cep", true);
+                    $form->post("mail", true);
+                    $form->post("adres", true);
+                    $baslik = $form->values['baslik'];
+                    $aciklama = $form->values['aciklama'];
+                    $is = $form->values['is'];
+                    $is3 = $form->values['is3'];
+                    $is4 = $form->values['is4'];
+                    $cep = $form->values['cep'];
+                    $mail = $form->values['mail'];
+                    $adres = $form->values['adres'];
+                    $iframe = $form->values['iframe'];
+                    if ($baslik != "") {
+                        if ($aciklama != "") {
+                            $realName = $_FILES['file']['name'];
+                            $id = 1;
+                            if ($realName != "") {
+                                $image = new Upload($_FILES['file']);
+                                $image = new Upload($_FILES['file']);
+                                $width = $image->image_src_x;
+                                $height = $image->image_src_y;
+                                $oran = $width / $height;
+                                if ($oran < 1) {
+                                    $newheight = 400;
+                                    $newwidth = round($height * $oran);
+                                } else if ($oran == 1) {
+                                    $newheight = 400;
+                                    $newwidth = 500;
+                                } else {
+                                    $newheight = round($width / $oran);
+                                    $newwidth = 500;
+                                }
+                                //oranlama
+                                $width = $image->image_src_x;
+                                $height = $image->image_src_y;
+                                $oran = $width / $height;
+                                if ($oran < 1) {
+                                    $newheight = 400;
+                                    $newwidth = round($height * $oran);
+                                } else if ($oran == 1) {
+                                    $newheight = 400;
+                                    $newwidth = 500;
+                                } else {
+                                    $newheight = round($width / $oran);
+                                    $newwidth = 500;
+                                }
+                                if ($image->uploaded) {
+                                    // sadece resim formatları yüklensin
+                                    $image->allowed = array('image/*');
+                                    $image->image_min_height = 100;
+                                    $image->image_min_width = 100;
+                                    $image->image_max_height = 2000;
+                                    $image->image_max_width = 2000;
+                                    $image->file_new_name_body = time();
+                                    $image->file_name_body_pre = 'logo_';
+                                    $image->image_resize = true;
+                                    $image->image_ratio_crop = true;
+                                    $image->image_x = 300;
+                                    $image->image_y = 110;
+                                    $image->Process("upload/logo");
+                                    if ($image->processed) {
+                                        if ($form->submit()) {
+                                            $dataAyar = array(
+                                                'site_baslik' => $baslik,
+                                                'site_aciklama' => $aciklama,
+                                                'is_tel' => $is,
+                                                'is_tel3' => $is3,
+                                                'is_tel4' => $is4,
+                                                'iframe' => $iframe,
+                                                'cep_tel' => $cep,
+                                                'site_mail' => $mail,
+                                                'adres' => $adres,
+                                                'resim' => $image->file_dst_name
+                                            );
+                                        }
+                                        $result = $Panel_Model->ayarupdate($dataAyar, $id);
+                                        if ($result) {
+                                            $sonuc["yol"] = $image->file_dst_name;
+                                            $sonuc["result"] = "Başarılı bir şekilde güncellenme olmuştur.";
+                                        } else {
+                                            $sonuc["hata"] = "Bir hata oluştu.Tekrar deneyiniz";
+                                        }
+                                    } else {
+                                        $sonuc["hata"] = $image->error;
+                                    }
+                                } else {
+                                    $sonuc["hata"] = $image->error;
+                                }
+                            } else {
+                                if ($form->submit()) {
+                                    $dataAyar = array(
+                                        'site_baslik' => $baslik,
+                                        'site_aciklama' => $aciklama,
+                                        'is_tel' => $is,
+                                        'is_tel3' => $is3,
+                                        'is_tel4' => $is4,
+                                        'iframe' => $iframe,
+                                        'cep_tel' => $cep,
+                                        'site_mail' => $mail,
+                                        'adres' => $adres
+                                    );
+                                }
+                                $result = $Panel_Model->ayarupdate($dataAyar, $id);
+                                if ($result) {
+                                    $sonuc["result"] = "Başarılı bir şekilde güncellenme olmuştur.";
+                                } else {
+                                    $sonuc["hata"] = "Bir hata oluştu.Tekrar deneyiniz";
+                                }
+                            }
+                        } else {
+                            $sonuc["hata"] = "Lütfen site açıklamasını giriniz.";
+                        }
+                    } else {
+                        $sonuc["hata"] = "Lütfen site başlığını giriniz.";
+                    }
+                    break;
+                case "profilDuzenle":
+                    require "app/otherClasses/class.upload.php";
+                    $form->post("ad", true);
+                    $form->post("adres", true);
+                    $form->post("sehir", true);
+                    $form->post("cinsiyetval", true);
+                    $form->post("email", true);
+                    $ad = $form->values['ad'];
+                    $adres = $form->values['adres'];
+                    $sehir = $form->values['sehir'];
+                    $cinsiyetval = $form->values['cinsiyetval'];
+                    $email = $form->values['email'];
+                    if ($ad != "") {
+                        if ($adres != "") {
+                            if ($sehir != "") {
+                                if ($email != "") {
+                                    $realName = $_FILES['file']['name'];
+                                    $id = Session::get("ID");
+                                    if ($realName != "") {
+                                        $image = new Upload($_FILES['file']);
+                                        $image = new Upload($_FILES['file']);
+                                        $width = $image->image_src_x;
+                                        $height = $image->image_src_y;
+                                        $oran = $width / $height;
+                                        if ($oran < 1) {
+                                            $newheight = 400;
+                                            $newwidth = round($height * $oran);
+                                        } else if ($oran == 1) {
+                                            $newheight = 400;
+                                            $newwidth = 500;
+                                        } else {
+                                            $newheight = round($width / $oran);
+                                            $newwidth = 500;
+                                        }
+                                        //oranlama
+                                        $width = $image->image_src_x;
+                                        $height = $image->image_src_y;
+                                        $oran = $width / $height;
+                                        if ($oran < 1) {
+                                            $newheight = 400;
+                                            $newwidth = round($height * $oran);
+                                        } else if ($oran == 1) {
+                                            $newheight = 400;
+                                            $newwidth = 500;
+                                        } else {
+                                            $newheight = round($width / $oran);
+                                            $newwidth = 500;
+                                        }
+                                        if ($image->uploaded) {
+                                            // sadece resim formatları yüklensin
+                                            $image->allowed = array('image/*');
+                                            $image->image_min_height = 100;
+                                            $image->image_min_width = 100;
+                                            $image->image_max_height = 2000;
+                                            $image->image_max_width = 2000;
+                                            $image->file_new_name_body = time();
+                                            $image->file_name_body_pre = 'profil_';
+                                            $image->image_resize = true;
+                                            $image->image_ratio_crop = true;
+                                            $image->image_x = 300;
+                                            $image->image_y = 300;
+                                            $image->Process("upload/profil");
+                                            if ($image->processed) {
+                                                if ($form->submit()) {
+                                                    Session::set("presim", $image->file_dst_name);
+                                                    $dataProfil = array(
+                                                        'fwkullaniciAd' => $ad,
+                                                        'fwkullaniciAdres' => $adres,
+                                                        'fwkullaniciSehir' => $sehir,
+                                                        'fwkullaniciCinsiyet' => $cinsiyetval,
+                                                        'fwkullaniciEmail' => $email,
+                                                        'fwkullanici_Resim' => $image->file_dst_name
+                                                    );
+                                                }
+                                                $result = $Panel_Model->profilupdate($dataProfil, $id);
+                                                if ($result) {
+                                                    $sonuc["yol"] = $image->file_dst_name;
+                                                    $sonuc["result"] = "Başarılı bir şekilde güncellenme olmuştur.";
+                                                } else {
+                                                    $sonuc["hata"] = "Bir hata oluştu.Tekrar deneyiniz";
+                                                }
+                                            } else {
+                                                $sonuc["hata"] = $image->error;
+                                            }
+                                        } else {
+                                            $sonuc["hata"] = $image->error;
+                                        }
+                                    } else {
+                                        if ($form->submit()) {
+                                            $dataProfil = array(
+                                                'fwkullaniciAd' => $ad,
+                                                'fwkullaniciAdres' => $adres,
+                                                'fwkullaniciSehir' => $sehir,
+                                                'fwkullaniciCinsiyet' => $cinsiyetval,
+                                                'fwkullaniciEmail' => $email
+                                            );
+                                        }
+                                        $result = $Panel_Model->profilupdate($dataProfil, $id);
+                                        if ($result) {
+                                            $sonuc["result"] = "Başarılı bir şekilde güncellenme olmuştur.";
+                                        } else {
+                                            $sonuc["hata"] = "Bir hata oluştu.Tekrar deneyiniz";
+                                        }
+                                    }
+                                } else {
+                                    $sonuc["hata"] = "Lütfen mail adresinizi giriniz.";
+                                }
+                            } else {
+                                $sonuc["hata"] = "Lütfen şehrinizi giriniz.";
+                            }
+                        } else {
+                            $sonuc["hata"] = "Lütfen adres alanınızı doldurunuz.";
+                        }
+                    } else {
+                        $sonuc["hata"] = "Lütfen isim kısmını boş girmeyiniz.";
+                    }
+                    break;
                 case "vitrinDuzenle":
                     require "app/otherClasses/class.upload.php";
                     $form->post("sirasi", true);
+                    $form->post("degisecekSira", true);
                     $form->post("url", true);
                     $form->post("vitrinkategorii", true);
                     $form->post("id", true);
+                    $form->post("degisecekID", true);
                     $sirasi = $form->values['sirasi'];
+                    $degisecekSira = $form->values['degisecekSira'];
                     $url = $form->values['url'];
                     $vitrinkategorii = $form->values['vitrinkategorii'];
                     $id = $form->values['id'];
+                    $degisecekID = $form->values['degisecekID'];
+//                    error_log("değişecek sira".$degisecekSira);
+//                    error_log("normal yeni sirasi".$sirasi);
+//                    error_log("id siiii".$id);
+//                    error_log("değişeceğin id si".$degisecekID);
                     if ($sirasi != "") {
                         if ($vitrinkategorii != -1) {
                             $realName = $_FILES['file']['name'];
                             if ($realName != "") {
                                 $image = new Upload($_FILES['file']);
+                                $image = new Upload($_FILES['file']);
+                                $width = $image->image_src_x;
+                                $height = $image->image_src_y;
+                                $oran = $width / $height;
+                                if ($oran < 1) {
+                                    $newheight = 400;
+                                    $newwidth = round($height * $oran);
+                                } else if ($oran == 1) {
+                                    $newheight = 400;
+                                    $newwidth = 500;
+                                } else {
+                                    $newheight = round($width / $oran);
+                                    $newwidth = 500;
+                                }
+                                //oranlama
+                                $width = $image->image_src_x;
+                                $height = $image->image_src_y;
+                                $oran = $width / $height;
+                                if ($oran < 1) {
+                                    $newheight = 400;
+                                    $newwidth = round($height * $oran);
+                                } else if ($oran == 1) {
+                                    $newheight = 400;
+                                    $newwidth = 500;
+                                } else {
+                                    $newheight = round($width / $oran);
+                                    $newwidth = 500;
+                                }
                                 if ($image->uploaded) {
                                     // sadece resim formatları yüklensin
                                     $image->allowed = array('image/*');
@@ -731,8 +887,8 @@ class Admin_Ajax extends Controller {
                                     $image->file_name_body_pre = 'yeditepe_v6';
                                     $image->image_resize = true;
                                     $image->image_ratio_crop = true;
-                                    $image->image_x = 900;
-                                    $image->image_y = 900;
+                                    $image->image_x = 1200;
+                                    $image->image_y = 500;
                                     $image->Process("upload/vitrinler");
                                     if ($image->processed) {
                                         if ($form->submit()) {
@@ -745,6 +901,12 @@ class Admin_Ajax extends Controller {
                                         }
                                         $result = $Panel_Model->vitrinupdate($dataVitrin, $id);
                                         if ($result) {
+                                            if (degisecekID != 0) {
+                                                $dataSira = array(
+                                                    'Sira' => $degisecekSira
+                                                );
+                                                $result = $Panel_Model->vitrinsiraupdate($dataSira, $degisecekID);
+                                            }
                                             $sonuc["yol"] = $image->file_dst_name;
                                             $sonuc["result"] = "Başarılı bir şekilde güncellenme olmuştur.";
                                         } else {
@@ -766,6 +928,13 @@ class Admin_Ajax extends Controller {
                                 }
                                 $result = $Panel_Model->vitrinupdate($dataVitrin, $id);
                                 if ($result) {
+                                    if (degisecekID != 0) {
+                                        $dataSira = array(
+                                            'Sira' => $degisecekSira
+                                        );
+                                        $result = $Panel_Model->vitrinsiraupdate($dataSira, $degisecekID);
+                                    }
+//                                            error_log($degisecekID);
                                     $sonuc["result"] = "Başarılı bir şekilde güncellenme olmuştur.";
                                 } else {
                                     $sonuc["hata"] = "Bir hata oluştu.Tekrar deneyiniz";
@@ -793,6 +962,33 @@ class Admin_Ajax extends Controller {
                                 $realName = $_FILES['file']['name'];
                                 if ($realName != "") {
                                     $image = new Upload($_FILES['file']);
+                                    $width = $image->image_src_x;
+                                    $height = $image->image_src_y;
+                                    $oran = $width / $height;
+                                    if ($oran < 1) {
+                                        $newheight = 400;
+                                        $newwidth = round($height * $oran);
+                                    } else if ($oran == 1) {
+                                        $newheight = 400;
+                                        $newwidth = 500;
+                                    } else {
+                                        $newheight = round($width / $oran);
+                                        $newwidth = 500;
+                                    }
+                                    //oranlama
+                                    $width = $image->image_src_x;
+                                    $height = $image->image_src_y;
+                                    $oran = $width / $height;
+                                    if ($oran < 1) {
+                                        $newheight = 400;
+                                        $newwidth = round($height * $oran);
+                                    } else if ($oran == 1) {
+                                        $newheight = 400;
+                                        $newwidth = 500;
+                                    } else {
+                                        $newheight = round($width / $oran);
+                                        $newwidth = 500;
+                                    }
                                     if ($image->uploaded) {
                                         // sadece resim formatları yüklensin
                                         $image->allowed = array('image/*');
@@ -804,8 +1000,8 @@ class Admin_Ajax extends Controller {
                                         $image->file_name_body_pre = 'hakkinda_';
                                         $image->image_resize = true;
                                         $image->image_ratio_crop = true;
-                                        $image->image_x = 900;
-                                        $image->image_y = 900;
+                                        $image->image_x = 1170;
+                                        $image->image_y = 366;
                                         $image->Process("upload/about");
                                         if ($image->processed) {
                                             if ($form->submit()) {
@@ -941,8 +1137,8 @@ class Admin_Ajax extends Controller {
                                         $image->file_name_body_pre = 'marka_';
                                         $image->image_resize = true;
                                         $image->image_ratio_crop = true;
-                                        $image->image_x = 255;
-                                        $image->image_y = 168;
+                                        $image->image_x = 217;
+                                        $image->image_y = 122;
                                         $image->Process("upload/markalar");
 
                                         if ($image->processed) {
@@ -995,6 +1191,33 @@ class Admin_Ajax extends Controller {
                                 $realName = $_FILES['file']['name'];
                                 if ($realName != "") {
                                     $image = new Upload($_FILES['file']);
+                                    $width = $image->image_src_x;
+                                    $height = $image->image_src_y;
+                                    $oran = $width / $height;
+                                    if ($oran < 1) {
+                                        $newheight = 400;
+                                        $newwidth = round($height * $oran);
+                                    } else if ($oran == 1) {
+                                        $newheight = 400;
+                                        $newwidth = 500;
+                                    } else {
+                                        $newheight = round($width / $oran);
+                                        $newwidth = 500;
+                                    }
+                                    //oranlama
+                                    $width = $image->image_src_x;
+                                    $height = $image->image_src_y;
+                                    $oran = $width / $height;
+                                    if ($oran < 1) {
+                                        $newheight = 400;
+                                        $newwidth = round($height * $oran);
+                                    } else if ($oran == 1) {
+                                        $newheight = 400;
+                                        $newwidth = 500;
+                                    } else {
+                                        $newheight = round($width / $oran);
+                                        $newwidth = 500;
+                                    }
                                     if ($image->uploaded) {
                                         // sadece resim formatları yüklensin
                                         $image->allowed = array('image/*');
@@ -1006,8 +1229,8 @@ class Admin_Ajax extends Controller {
                                         $image->file_name_body_pre = 'yeditepe_v6';
                                         $image->image_resize = true;
                                         $image->image_ratio_crop = true;
-                                        $image->image_x = 255;
-                                        $image->image_y = 168;
+                                        $image->image_x = 1200;
+                                        $image->image_y = 500;
                                         $image->Process("upload/vitrinler");
 
                                         if ($image->processed) {
@@ -1059,6 +1282,33 @@ class Admin_Ajax extends Controller {
                                 $realName = $_FILES['file']['name'];
                                 if ($realName != "") {
                                     $image = new Upload($_FILES['file']);
+                                    $width = $image->image_src_x;
+                                    $height = $image->image_src_y;
+                                    $oran = $width / $height;
+                                    if ($oran < 1) {
+                                        $newheight = 400;
+                                        $newwidth = round($height * $oran);
+                                    } else if ($oran == 1) {
+                                        $newheight = 400;
+                                        $newwidth = 500;
+                                    } else {
+                                        $newheight = round($width / $oran);
+                                        $newwidth = 500;
+                                    }
+                                    //oranlama
+                                    $width = $image->image_src_x;
+                                    $height = $image->image_src_y;
+                                    $oran = $width / $height;
+                                    if ($oran < 1) {
+                                        $newheight = 400;
+                                        $newwidth = round($height * $oran);
+                                    } else if ($oran == 1) {
+                                        $newheight = 400;
+                                        $newwidth = 500;
+                                    } else {
+                                        $newheight = round($width / $oran);
+                                        $newwidth = 500;
+                                    }
                                     if ($image->uploaded) {
                                         // sadece resim formatları yüklensin
                                         $image->allowed = array('image/*');
@@ -1070,8 +1320,8 @@ class Admin_Ajax extends Controller {
                                         $image->file_name_body_pre = 'hakkinda_';
                                         $image->image_resize = true;
                                         $image->image_ratio_crop = true;
-                                        $image->image_x = 255;
-                                        $image->image_y = 168;
+                                        $image->image_x = 1170;
+                                        $image->image_y = 366;
                                         $image->Process("upload/about");
 
                                         if ($image->processed) {

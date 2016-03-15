@@ -39,12 +39,6 @@
                                     <?php } ?>
                                 </tbody>
                                 <tfoot>
-                                    <tr>
-                                        <th class="col col-md-5">Kategori adı</th>
-                                        <th class="col col-md-5">Türü</th>
-                                        <th class="col col-md-2">İşlemler</th>
-                                    </tr>
-                                </tfoot>
                             </table>
                         </div><!-- /.box-body -->
                     </div><!-- /.box -->
