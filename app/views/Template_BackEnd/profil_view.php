@@ -75,8 +75,8 @@
                                 </div>
                             </div>  
                             <div class="box-footer">
-                                <button type="button" id="sifredegis" class="btn btn-info pull-right"style="margin-left: 5px" >Şifre Değiştir</button>
-                                <button type="button" id="profilDuzenle" class="btn btn-info pull-right" >Profil Duzenle</button>
+                                <button type="button" id="sifredegis" class="btn btn-info btn-lg pull-right fa fa-key"style="margin-left: 5px" >Şifre Değiştir</button>
+                                <button type="button" id="profilDuzenle" class="btn btn-info pull-right btn-lg fa fa-edit" >Profil Duzenle</button>
                             </div><!-- /.box-footer -->
                     </form>
                 </div>
